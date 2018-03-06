@@ -5,6 +5,7 @@ echo "id scale ngroups work_mem enable_incrementalsort max_workers incremental p
 OUT=$1
 SCALE=$2
 
+EXPLAINS=$OUT/explains-limit-$SCALE.log
 ID=1
 
 l=$((SCALE/100))
@@ -42,9 +43,9 @@ for ngroups in 10 100 1000 10000; do
 
 				d=`date`
 
-				echo "===== $ID [$d] $SCALE $ngroups $wm $incremental $mworkers =====" >> $OUT/explains-limit.log
-				echo "$sql" >> $OUT/explains-limit.log
-				psql test -c "EXPLAIN $sql" >> $OUT/explains-limit.log
+				echo "===== $ID [$d] scale:$SCALE groups:$ngroups work_mem:$wm incremental:$incremental max_workers:$mworkers =====" >> $EXPLAINS
+				echo "$sql" >> $EXPLAINS
+				psql test -c "EXPLAIN $sql" >> $EXPLAINS
 
 				incr=`psql test -c "EXPLAIN $sql" | grep 'Incremental Sort' | wc -l`
 				part=`psql test -c "EXPLAIN $sql" | grep 'Partial' | wc -l`
@@ -72,9 +73,9 @@ EOF
 
 				d=`date`
 
-				echo "===== $ID [$d] $SCALE $ngroups $wm $incremental $mworkers =====" >> $OUT/explains-limit.log
-				echo "$sql" >> $OUT/explains-limit.log
-				psql test -c "EXPLAIN $sql" >> $OUT/explains-limit.log
+				echo "===== $ID [$d] scale:$SCALE groups:$ngroups work_mem:$wm incremental:$incremental max_workers:$mworkers =====" >> $EXPLAINS
+				echo "$sql" >> $EXPLAINS
+				psql test -c "EXPLAIN $sql" >> $EXPLAINS
 
 				incr=`psql test -c "EXPLAIN $sql" | grep 'Incremental Sort' | wc -l`
 				part=`psql test -c "EXPLAIN $sql" | grep 'Partial' | wc -l`
@@ -102,9 +103,9 @@ EOF
 
 				d=`date`
 
-				echo "===== $ID [$d] $SCALE $ngroups $wm $incremental $mworkers =====" >> $OUT/explains-limit.log
-				echo "$sql" >> $OUT/explains-limit.log
-				psql test -c "EXPLAIN $sql" >> $OUT/explains-limit.log
+				echo "===== $ID [$d] scale:$SCALE groups:$ngroups work_mem:$wm incremental:$incremental max_workers:$mworkers =====" >> $EXPLAINS
+				echo "$sql" >> $EXPLAINS
+				psql test -c "EXPLAIN $sql" >> $EXPLAINS
 
 				incr=`psql test -c "EXPLAIN $sql" | grep 'Incremental Sort' | wc -l`
 				part=`psql test -c "EXPLAIN $sql" | grep 'Partial' | wc -l`
@@ -132,9 +133,9 @@ EOF
 
 				d=`date`
 
-				echo "===== $ID [$d] $SCALE $ngroups $wm $incremental $mworkers =====" >> $OUT/explains-limit.log
-				echo "$sql" >> $OUT/explains-limit.log
-				psql test -c "EXPLAIN $sql" >> $OUT/explains-limit.log
+				echo "===== $ID [$d] scale:$SCALE groups:$ngroups work_mem:$wm incremental:$incremental max_workers:$mworkers =====" >> $EXPLAINS
+				echo "$sql" >> $EXPLAINS
+				psql test -c "EXPLAIN $sql" >> $EXPLAINS
 
 				incr=`psql test -c "EXPLAIN $sql" | grep 'Incremental Sort' | wc -l`
 				part=`psql test -c "EXPLAIN $sql" | grep 'Partial' | wc -l`
