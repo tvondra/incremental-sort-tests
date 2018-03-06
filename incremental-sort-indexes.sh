@@ -6,8 +6,11 @@ OUT=$1
 SCALE=$2
 
 ID=1
-EXPLAINS=$OUT/explains-indexes-$SCALE.log
-EXPLAINS_ANALYZE=$OUT/explains-analyze-indexes-$SCALE.log
+
+EXPLAINS=$OUT/explain/indexes.log
+EXPLAINS_ANALYZE=$OUT/explain-analyze/indexes.log
+
+mkdir $OUT/explain $OUT/explain-analyze
 
 for ngroups in 10 100 1000 10000; do
 

@@ -5,9 +5,12 @@ echo "id scale ngroups work_mem enable_incrementalsort max_workers incremental p
 OUT=$1
 SCALE=$2
 
-EXPLAINS=$OUT/explains-limit-$SCALE.log
-EXPLAINS_ANALYZE=$OUT/explains-analyze-limit-$SCALE.log
 ID=1
+
+EXPLAINS=$OUT/explain/sort-limit.log
+EXPLAINS_ANALYZE=$OUT/explain-analyze/sort-limit.log
+
+mkdir $OUT/explain $OUT/explain-analyze
 
 l=$((SCALE/100))
 

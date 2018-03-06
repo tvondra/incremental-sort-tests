@@ -6,8 +6,11 @@ OUT=$1
 SCALE=$2
 
 ID=1
-EXPLAINS=$OUT/explains-indexes-ios-limit-$SCALE.log
-EXPLAINS_ANALYZE=$OUT/explains-analyze-indexes-ios-limit-$SCALE.log
+
+EXPLAINS=$OUT/explain/indexes-ios-limit.log
+EXPLAINS_ANALYZE=$OUT/explain-analyze/indexes-ios-limit.log
+
+mkdir $OUT/explain $OUT/explain-analyze
 
 l=$((SCALE/100))
 
