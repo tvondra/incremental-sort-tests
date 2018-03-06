@@ -53,7 +53,7 @@ for ngroups in 10 100 1000 10000; do
 
 				echo "===== $ID [$d] scale:$SCALE groups:$ngroups work_mem:$wm incremental:$incremental max_workers:$mworkers =====" >> $EXPLAINS_ANALYZE
 				echo "$sql" >> $EXPLAINS_ANALYZE
-				psql test -c "EXPLAIN ANALYZE $sql" >> $EXPLAINS_ANALYZE
+				psql test -c "EXPLAIN ANALYZE SELECT * FROM ($sql OFFSET 0) bar OFFSET 1000000000" >> $EXPLAINS_ANALYZE
 
 				incr=`psql test -c "EXPLAIN $sql" | grep 'Incremental Sort' | wc -l`
 				part=`psql test -c "EXPLAIN $sql" | grep 'Partial' | wc -l`
@@ -89,7 +89,7 @@ EOF
 
 				echo "===== $ID [$d] scale:$SCALE groups:$ngroups work_mem:$wm incremental:$incremental max_workers:$mworkers =====" >> $EXPLAINS_ANALYZE
 				echo "$sql" >> $EXPLAINS_ANALYZE
-				psql test -c "EXPLAIN ANALYZE $sql" >> $EXPLAINS_ANALYZE
+				psql test -c "EXPLAIN ANALYZE SELECT * FROM ($sql OFFSET 0) bar OFFSET 1000000000" >> $EXPLAINS_ANALYZE
 
 				incr=`psql test -c "EXPLAIN $sql" | grep 'Incremental Sort' | wc -l`
 				part=`psql test -c "EXPLAIN $sql" | grep 'Partial' | wc -l`
@@ -125,7 +125,7 @@ EOF
 
 				echo "===== $ID [$d] scale:$SCALE groups:$ngroups work_mem:$wm incremental:$incremental max_workers:$mworkers =====" >> $EXPLAINS_ANALYZE
 				echo "$sql" >> $EXPLAINS_ANALYZE
-				psql test -c "EXPLAIN ANALYZE $sql" >> $EXPLAINS_ANALYZE
+				psql test -c "EXPLAIN ANALYZE SELECT * FROM ($sql OFFSET 0) bar OFFSET 1000000000" >> $EXPLAINS_ANALYZE
 
 				incr=`psql test -c "EXPLAIN $sql" | grep 'Incremental Sort' | wc -l`
 				part=`psql test -c "EXPLAIN $sql" | grep 'Partial' | wc -l`
