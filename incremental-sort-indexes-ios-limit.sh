@@ -10,7 +10,7 @@ ID=1
 EXPLAINS=$OUT/explain/indexes-ios-limit.log
 EXPLAINS_ANALYZE=$OUT/explain-analyze/indexes-ios-limit.log
 
-mkdir $OUT/explain $OUT/explain-analyze
+mkdir -p $OUT/explain $OUT/explain-analyze
 
 l=$((SCALE/100))
 

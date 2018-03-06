@@ -10,7 +10,7 @@ ID=1
 EXPLAINS=$OUT/explain/sort.log
 EXPLAINS_ANALYZE=$OUT/explain-analyze/sort.log
 
-mkdir $OUT/explain $OUT/explain-analyze
+mkdir -p $OUT/explain $OUT/explain-analyze
 
 for ngroups in 10 100 1000 10000; do
 

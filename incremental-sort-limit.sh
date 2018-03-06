@@ -10,7 +10,7 @@ ID=1
 EXPLAINS=$OUT/explain/sort-limit.log
 EXPLAINS_ANALYZE=$OUT/explain-analyze/sort-limit.log
 
-mkdir $OUT/explain $OUT/explain-analyze
+mkdir -p $OUT/explain $OUT/explain-analyze
 
 l=$((SCALE/100))
 
