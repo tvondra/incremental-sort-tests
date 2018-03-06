@@ -47,7 +47,7 @@ for ngroups in 10 100 1000 10000; do
 
 				echo "===== $ID [$d] scale:$SCALE groups:$ngroups work_mem:$wm incremental:$incremental max_workers:$mworkers =====" >> $EXPLAINS
 				echo "$sql" >> $EXPLAINS
-				psql test -c "EXPLAIN $sql" >> $EXPLAINS
+				psql test -c "EXPLAIN SELECT COUNT(*) FROM ($sql OFFSET 0) bar" >> $EXPLAINS
 
 				echo "===== $ID [$d] scale:$SCALE groups:$ngroups work_mem:$wm incremental:$incremental max_workers:$mworkers =====" >> $EXPLAINS_ANALYZE
 				echo "$sql" >> $EXPLAINS_ANALYZE
@@ -65,7 +65,7 @@ for ngroups in 10 100 1000 10000; do
 
 					psql test <<EOF
 \o /dev/null
-$sql
+SELECT COUNT(*) FROM ($sql OFFSET 0) bar;
 EOF
 
 					d=`psql test -t -A -c "select (1000 * (extract(epoch from now()) - $s))::int"`
@@ -82,7 +82,7 @@ EOF
 
 				echo "===== $ID [$d] scale:$SCALE groups:$ngroups work_mem:$wm incremental:$incremental max_workers:$mworkers =====" >> $EXPLAINS
 				echo "$sql" >> $EXPLAINS
-				psql test -c "EXPLAIN $sql" >> $EXPLAINS
+				psql test -c "EXPLAIN SELECT COUNT(*) FROM ($sql OFFSET 0) bar" >> $EXPLAINS
 
 				echo "===== $ID [$d] scale:$SCALE groups:$ngroups work_mem:$wm incremental:$incremental max_workers:$mworkers =====" >> $EXPLAINS_ANALYZE
 				echo "$sql" >> $EXPLAINS_ANALYZE
@@ -100,7 +100,7 @@ EOF
 
 					psql test <<EOF
 \o /dev/null
-$sql
+SELECT COUNT(*) FROM ($sql OFFSET 0) bar;
 EOF
 
 					d=`psql test -t -A -c "select (1000 * (extract(epoch from now()) - $s))::int"`
@@ -117,7 +117,7 @@ EOF
 
 				echo "===== $ID [$d] scale:$SCALE groups:$ngroups work_mem:$wm incremental:$incremental max_workers:$mworkers =====" >> $EXPLAINS
 				echo "$sql" >> $EXPLAINS
-				psql test -c "EXPLAIN $sql" >> $EXPLAINS
+				psql test -c "EXPLAIN SELECT COUNT(*) FROM ($sql OFFSET 0) bar" >> $EXPLAINS
 
 				echo "===== $ID [$d] scale:$SCALE groups:$ngroups work_mem:$wm incremental:$incremental max_workers:$mworkers =====" >> $EXPLAINS_ANALYZE
 				echo "$sql" >> $EXPLAINS_ANALYZE
@@ -135,7 +135,7 @@ EOF
 
 					psql test <<EOF
 \o /dev/null
-$sql
+SELECT COUNT(*) FROM ($sql OFFSET 0) bar;
 EOF
 
 					d=`psql test -t -A -c "select (1000 * (extract(epoch from now()) - $s))::int"`
