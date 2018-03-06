@@ -6,6 +6,7 @@ OUT=$1
 SCALE=$2
 
 EXPLAINS=$OUT/explains-limit-$SCALE.log
+EXPLAINS_ANALYZE=$OUT/explains-analyze-limit-$SCALE.log
 ID=1
 
 l=$((SCALE/100))
@@ -47,6 +48,10 @@ for ngroups in 10 100 1000 10000; do
 				echo "$sql" >> $EXPLAINS
 				psql test -c "EXPLAIN $sql" >> $EXPLAINS
 
+				echo "===== $ID [$d] scale:$SCALE groups:$ngroups work_mem:$wm incremental:$incremental max_workers:$mworkers =====" >> $EXPLAINS_ANALYZE
+				echo "$sql" >> $EXPLAINS_ANALYZE
+				psql test -c "EXPLAIN ANALYZE $sql" >> $EXPLAINS_ANALYZE
+
 				incr=`psql test -c "EXPLAIN $sql" | grep 'Incremental Sort' | wc -l`
 				part=`psql test -c "EXPLAIN $sql" | grep 'Partial' | wc -l`
 
@@ -76,6 +81,10 @@ EOF
 				echo "===== $ID [$d] scale:$SCALE groups:$ngroups work_mem:$wm incremental:$incremental max_workers:$mworkers =====" >> $EXPLAINS
 				echo "$sql" >> $EXPLAINS
 				psql test -c "EXPLAIN $sql" >> $EXPLAINS
+
+				echo "===== $ID [$d] scale:$SCALE groups:$ngroups work_mem:$wm incremental:$incremental max_workers:$mworkers =====" >> $EXPLAINS_ANALYZE
+				echo "$sql" >> $EXPLAINS_ANALYZE
+				psql test -c "EXPLAIN ANALYZE $sql" >> $EXPLAINS_ANALYZE
 
 				incr=`psql test -c "EXPLAIN $sql" | grep 'Incremental Sort' | wc -l`
 				part=`psql test -c "EXPLAIN $sql" | grep 'Partial' | wc -l`
@@ -107,6 +116,10 @@ EOF
 				echo "$sql" >> $EXPLAINS
 				psql test -c "EXPLAIN $sql" >> $EXPLAINS
 
+				echo "===== $ID [$d] scale:$SCALE groups:$ngroups work_mem:$wm incremental:$incremental max_workers:$mworkers =====" >> $EXPLAINS_ANALYZE
+				echo "$sql" >> $EXPLAINS_ANALYZE
+				psql test -c "EXPLAIN ANALYZE $sql" >> $EXPLAINS_ANALYZE
+
 				incr=`psql test -c "EXPLAIN $sql" | grep 'Incremental Sort' | wc -l`
 				part=`psql test -c "EXPLAIN $sql" | grep 'Partial' | wc -l`
 
@@ -136,6 +149,10 @@ EOF
 				echo "===== $ID [$d] scale:$SCALE groups:$ngroups work_mem:$wm incremental:$incremental max_workers:$mworkers =====" >> $EXPLAINS
 				echo "$sql" >> $EXPLAINS
 				psql test -c "EXPLAIN $sql" >> $EXPLAINS
+
+				echo "===== $ID [$d] scale:$SCALE groups:$ngroups work_mem:$wm incremental:$incremental max_workers:$mworkers =====" >> $EXPLAINS_ANALYZE
+				echo "$sql" >> $EXPLAINS_ANALYZE
+				psql test -c "EXPLAIN ANALYZE $sql" >> $EXPLAINS_ANALYZE
 
 				incr=`psql test -c "EXPLAIN $sql" | grep 'Incremental Sort' | wc -l`
 				part=`psql test -c "EXPLAIN $sql" | grep 'Partial' | wc -l`
