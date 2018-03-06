@@ -3,6 +3,7 @@
 echo "id scale ngroups work_mem enable_incrementalsort max_workers incremental partial table run duration"
 
 OUT=$1
+SCALE=$2
 
 ID=1
 EXPLAINS=$OUT/explains-$SCALE.log
