@@ -14,6 +14,8 @@ for ngroups in 10 100 1000 10000; do
 	dropdb test
 	createdb test
 
+	psql test -c "CREATE TABLE IF NOT EXISTS timings (s timestamp, e timestamp)" > /dev/null 2>&1
+
 	psql test -c "CREATE TABLE t (a int, b int, c int, d int, e int)" > /dev/null 2>&1
 	psql test -c "INSERT INTO t SELECT $ngroups*random(), $ngroups*random(), $ngroups*random(), $ngroups*random(), $ngroups*random() FROM generate_series(1,$SCALE)" > /dev/null 2>&1
 
@@ -61,14 +63,15 @@ for ngroups in 10 100 1000 10000; do
 
 					if [ -f "stop" ]; then exit; fi
 
-					s=`psql test -t -A -c "select extract(epoch from now())"`
-
 					psql test <<EOF
 \o /dev/null
+TRUNCATE timings;
+INSERT INTO timings VALUES (now());
 SELECT COUNT(*) FROM ($sql OFFSET 0) bar;
+UPDATE timings SET e = now();
 EOF
 
-					d=`psql test -t -A -c "select (1000 * (extract(epoch from now()) - $s))::int"`
+					d=`psql test -t -A -c "select (1000 * (extract(epoch from e) - extract(epoch from s)))::int from timings"`
 
 					echo $ID $SCALE $ngroups $wm $incremental $mworkers $incr $part $ios s_1 $r $d
 
@@ -96,14 +99,15 @@ EOF
 
 					if [ -f "stop" ]; then exit; fi
 
-					s=`psql test -t -A -c "select extract(epoch from now())"`
-
 					psql test <<EOF
 \o /dev/null
+TRUNCATE timings;
+INSERT INTO timings VALUES (now());
 SELECT COUNT(*) FROM ($sql OFFSET 0) bar;
+UPDATE timings SET e = now();
 EOF
 
-					d=`psql test -t -A -c "select (1000 * (extract(epoch from now()) - $s))::int"`
+					d=`psql test -t -A -c "select (1000 * (extract(epoch from e) - extract(epoch from s)))::int from timings"`
 
 					echo $ID $SCALE $ngroups $wm $incremental $mworkers $incr $part $ios s_2 $r $d
 
@@ -131,14 +135,15 @@ EOF
 
 					if [ -f "stop" ]; then exit; fi
 
-					s=`psql test -t -A -c "select extract(epoch from now())"`
-
 					psql test <<EOF
 \o /dev/null
+TRUNCATE timings;
+INSERT INTO timings VALUES (now());
 SELECT COUNT(*) FROM ($sql OFFSET 0) bar;
+UPDATE timings SET e = now();
 EOF
 
-					d=`psql test -t -A -c "select (1000 * (extract(epoch from now()) - $s))::int"`
+					d=`psql test -t -A -c "select (1000 * (extract(epoch from e) - extract(epoch from s)))::int from timings"`
 
 					echo $ID $SCALE $ngroups $wm $incremental $mworkers $incr $part $ios s_3 $r $d
 
