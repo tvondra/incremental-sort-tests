@@ -53,7 +53,7 @@ for ngroups in 10 100 1000 10000; do
 
 				echo "===== $ID [$d] scale:$SCALE groups:$ngroups work_mem:$wm incremental:$incremental max_workers:$mworkers =====" >> $EXPLAINS
 				echo "$sql" >> $EXPLAINS
-				psql test -c "EXPLAIN SELECT COUNT(*) FROM ($sql OFFSET 0) bar" >> $EXPLAINS
+				psql test -c "EXPLAIN SELECT * FROM ($sql OFFSET 0) bar OFFSET 1000000000" >> $EXPLAINS
 
 				echo "===== $ID [$d] scale:$SCALE groups:$ngroups work_mem:$wm incremental:$incremental max_workers:$mworkers =====" >> $EXPLAINS_ANALYZE
 				echo "$sql" >> $EXPLAINS_ANALYZE
@@ -70,7 +70,7 @@ for ngroups in 10 100 1000 10000; do
 \o /dev/null
 TRUNCATE timings;
 INSERT INTO timings VALUES (now());
-SELECT COUNT(*) FROM ($sql OFFSET 0) bar;
+SELECT * FROM ($sql OFFSET 0) bar OFFSET 1000000000;
 UPDATE timings SET e = now();
 EOF
 
@@ -88,7 +88,7 @@ EOF
 
 				echo "===== $ID [$d] scale:$SCALE groups:$ngroups work_mem:$wm incremental:$incremental max_workers:$mworkers =====" >> $EXPLAINS
 				echo "$sql" >> $EXPLAINS
-				psql test -c "EXPLAIN SELECT COUNT(*) FROM ($sql OFFSET 0) bar" >> $EXPLAINS
+				psql test -c "EXPLAIN SELECT * FROM ($sql OFFSET 0) bar OFFSET 1000000000" >> $EXPLAINS
 
 				echo "===== $ID [$d] scale:$SCALE groups:$ngroups work_mem:$wm incremental:$incremental max_workers:$mworkers =====" >> $EXPLAINS_ANALYZE
 				echo "$sql" >> $EXPLAINS_ANALYZE
@@ -105,7 +105,7 @@ EOF
 \o /dev/null
 TRUNCATE timings;
 INSERT INTO timings VALUES (now());
-SELECT COUNT(*) FROM ($sql OFFSET 0) bar;
+SELECT * FROM ($sql OFFSET 0) bar OFFSET 1000000000;
 UPDATE timings SET e = now();
 EOF
 
@@ -123,7 +123,7 @@ EOF
 
 				echo "===== $ID [$d] scale:$SCALE groups:$ngroups work_mem:$wm incremental:$incremental max_workers:$mworkers =====" >> $EXPLAINS
 				echo "$sql" >> $EXPLAINS
-				psql test -c "EXPLAIN SELECT COUNT(*) FROM ($sql OFFSET 0) bar" >> $EXPLAINS
+				psql test -c "EXPLAIN SELECT * FROM ($sql OFFSET 0) bar OFFSET 1000000000" >> $EXPLAINS
 
 				echo "===== $ID [$d] scale:$SCALE groups:$ngroups work_mem:$wm incremental:$incremental max_workers:$mworkers =====" >> $EXPLAINS_ANALYZE
 				echo "$sql" >> $EXPLAINS_ANALYZE
@@ -140,7 +140,7 @@ EOF
 \o /dev/null
 TRUNCATE timings;
 INSERT INTO timings VALUES (now());
-SELECT COUNT(*) FROM ($sql OFFSET 0) bar;
+SELECT * FROM ($sql OFFSET 0) bar OFFSET 1000000000;
 UPDATE timings SET e = now();
 EOF
 
@@ -158,7 +158,7 @@ EOF
 
 				echo "===== $ID [$d] scale:$SCALE groups:$ngroups work_mem:$wm incremental:$incremental max_workers:$mworkers =====" >> $EXPLAINS
 				echo "$sql" >> $EXPLAINS
-				psql test -c "EXPLAIN SELECT COUNT(*) FROM ($sql OFFSET 0) bar" >> $EXPLAINS
+				psql test -c "EXPLAIN SELECT * FROM ($sql OFFSET 0) bar OFFSET 1000000000" >> $EXPLAINS
 
 				echo "===== $ID [$d] scale:$SCALE groups:$ngroups work_mem:$wm incremental:$incremental max_workers:$mworkers =====" >> $EXPLAINS_ANALYZE
 				echo "$sql" >> $EXPLAINS_ANALYZE
@@ -175,7 +175,7 @@ EOF
 \o /dev/null
 TRUNCATE timings;
 INSERT INTO timings VALUES (now());
-SELECT COUNT(*) FROM ($sql OFFSET 0) bar;
+SELECT * FROM ($sql OFFSET 0) bar OFFSET 1000000000;
 UPDATE timings SET e = now();
 EOF
 
