@@ -126,7 +126,7 @@ EOF
 
 					d=`psql test -t -A -c "select (1000 * (extract(epoch from now()) - $s))::int"`
 
-					echo $SCALE $ngroups $wm $incremental $mworkers $incr $part s_3 $r $d
+					echo $ID $SCALE $ngroups $wm $incremental $mworkers $incr $part s_3 $r $d
 
 				done
 
@@ -156,7 +156,7 @@ EOF
 
 					d=`psql test -t -A -c "select (1000 * (extract(epoch from now()) - $s))::int"`
 
-					echo $SCALE $ngroups $wm $incremental $mworkers $incr $part s_4 $r $d
+					echo $ID $SCALE $ngroups $wm $incremental $mworkers $incr $part s_4 $r $d
 
 				done
 
