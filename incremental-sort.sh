@@ -67,7 +67,7 @@ SELECT COUNT(*) FROM ($sql OFFSET 0) bar;
 UPDATE timings SET e = now();
 EOF
 
-					d=`psql test -t -A -c "select (1000 * (extract(epoch from e) - extract(epoch from s)))::int from timings"`
+					d=`psql test -t -A -c "select (1000 * (extract(epoch from e) - extract(epoch from s))) from timings"`
 
 					echo $ID $SCALE $ngroups $wm $incremental $mworkers $incr $part s_1 $r $d
 
@@ -102,7 +102,7 @@ SELECT COUNT(*) FROM ($sql OFFSET 0) bar;
 UPDATE timings SET e = now();
 EOF
 
-					d=`psql test -t -A -c "select (1000 * (extract(epoch from e) - extract(epoch from s)))::int from timings"`
+					d=`psql test -t -A -c "select (1000 * (extract(epoch from e) - extract(epoch from s))) from timings"`
 
 					echo $ID $SCALE $ngroups $wm $incremental $mworkers $incr $part s_2 $r $d
 
@@ -137,7 +137,7 @@ SELECT COUNT(*) FROM ($sql OFFSET 0) bar;
 UPDATE timings SET e = now();
 EOF
 
-					d=`psql test -t -A -c "select (1000 * (extract(epoch from e) - extract(epoch from s)))::int from timings"`
+					d=`psql test -t -A -c "select (1000 * (extract(epoch from e) - extract(epoch from s))) from timings"`
 
 					echo $ID $SCALE $ngroups $wm $incremental $mworkers $incr $part s_3 $r $d
 
@@ -172,7 +172,7 @@ SELECT COUNT(*) FROM ($sql OFFSET 0) bar;
 UPDATE timings SET e = now();
 EOF
 
-					d=`psql test -t -A -c "select (1000 * (extract(epoch from e) - extract(epoch from s)))::int from timings"`
+					d=`psql test -t -A -c "select (1000 * (extract(epoch from e) - extract(epoch from s))) from timings"`
 
 					echo $ID $SCALE $ngroups $wm $incremental $mworkers $incr $part s_4 $r $d
 
