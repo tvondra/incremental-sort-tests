@@ -1,0 +1,3500 @@
+===== 1 [Wed Mar  7 02:00:00 CET 2018] scale:10000 groups:10 work_mem:4MB incremental:on max_workers:0 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 2 [Wed Mar  7 02:00:00 CET 2018] scale:10000 groups:10 work_mem:4MB incremental:on max_workers:0 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=954.15..954.15 rows=1 width=20)
+   ->  Incremental Sort  (cost=5.88..854.15 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         Presorted Key: s_2.a, s_2.b
+         ->  Index Only Scan using s_2_a_b_e_d_c_idx on s_2  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 3 [Wed Mar  7 02:00:00 CET 2018] scale:10000 groups:10 work_mem:4MB incremental:on max_workers:0 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.38..819.38 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.38 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         Presorted Key: s_3.a, s_3.b, s_3.c
+         ->  Index Only Scan using s_3_a_b_c_e_d_idx on s_3  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 4 [Wed Mar  7 02:00:00 CET 2018] scale:10000 groups:10 work_mem:4MB incremental:off max_workers:0 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 5 [Wed Mar  7 02:00:01 CET 2018] scale:10000 groups:10 work_mem:4MB incremental:off max_workers:0 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         ->  Seq Scan on s_2  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 6 [Wed Mar  7 02:00:01 CET 2018] scale:10000 groups:10 work_mem:4MB incremental:off max_workers:0 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         ->  Seq Scan on s_3  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 7 [Wed Mar  7 02:00:01 CET 2018] scale:10000 groups:10 work_mem:8MB incremental:on max_workers:0 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 8 [Wed Mar  7 02:00:01 CET 2018] scale:10000 groups:10 work_mem:8MB incremental:on max_workers:0 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=954.15..954.15 rows=1 width=20)
+   ->  Incremental Sort  (cost=5.88..854.15 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         Presorted Key: s_2.a, s_2.b
+         ->  Index Only Scan using s_2_a_b_e_d_c_idx on s_2  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 9 [Wed Mar  7 02:00:01 CET 2018] scale:10000 groups:10 work_mem:8MB incremental:on max_workers:0 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.38..819.38 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.38 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         Presorted Key: s_3.a, s_3.b, s_3.c
+         ->  Index Only Scan using s_3_a_b_c_e_d_idx on s_3  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 10 [Wed Mar  7 02:00:01 CET 2018] scale:10000 groups:10 work_mem:8MB incremental:off max_workers:0 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 11 [Wed Mar  7 02:00:01 CET 2018] scale:10000 groups:10 work_mem:8MB incremental:off max_workers:0 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         ->  Seq Scan on s_2  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 12 [Wed Mar  7 02:00:01 CET 2018] scale:10000 groups:10 work_mem:8MB incremental:off max_workers:0 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         ->  Seq Scan on s_3  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 13 [Wed Mar  7 02:00:01 CET 2018] scale:10000 groups:10 work_mem:16MB incremental:on max_workers:0 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 14 [Wed Mar  7 02:00:01 CET 2018] scale:10000 groups:10 work_mem:16MB incremental:on max_workers:0 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=954.15..954.15 rows=1 width=20)
+   ->  Incremental Sort  (cost=5.88..854.15 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         Presorted Key: s_2.a, s_2.b
+         ->  Index Only Scan using s_2_a_b_e_d_c_idx on s_2  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 15 [Wed Mar  7 02:00:02 CET 2018] scale:10000 groups:10 work_mem:16MB incremental:on max_workers:0 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.38..819.38 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.38 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         Presorted Key: s_3.a, s_3.b, s_3.c
+         ->  Index Only Scan using s_3_a_b_c_e_d_idx on s_3  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 16 [Wed Mar  7 02:00:02 CET 2018] scale:10000 groups:10 work_mem:16MB incremental:off max_workers:0 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 17 [Wed Mar  7 02:00:02 CET 2018] scale:10000 groups:10 work_mem:16MB incremental:off max_workers:0 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         ->  Seq Scan on s_2  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 18 [Wed Mar  7 02:00:02 CET 2018] scale:10000 groups:10 work_mem:16MB incremental:off max_workers:0 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         ->  Seq Scan on s_3  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 19 [Wed Mar  7 02:00:02 CET 2018] scale:10000 groups:10 work_mem:32MB incremental:on max_workers:0 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 20 [Wed Mar  7 02:00:02 CET 2018] scale:10000 groups:10 work_mem:32MB incremental:on max_workers:0 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=954.15..954.15 rows=1 width=20)
+   ->  Incremental Sort  (cost=5.88..854.15 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         Presorted Key: s_2.a, s_2.b
+         ->  Index Only Scan using s_2_a_b_e_d_c_idx on s_2  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 21 [Wed Mar  7 02:00:02 CET 2018] scale:10000 groups:10 work_mem:32MB incremental:on max_workers:0 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.38..819.38 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.38 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         Presorted Key: s_3.a, s_3.b, s_3.c
+         ->  Index Only Scan using s_3_a_b_c_e_d_idx on s_3  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 22 [Wed Mar  7 02:00:02 CET 2018] scale:10000 groups:10 work_mem:32MB incremental:off max_workers:0 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 23 [Wed Mar  7 02:00:02 CET 2018] scale:10000 groups:10 work_mem:32MB incremental:off max_workers:0 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         ->  Seq Scan on s_2  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 24 [Wed Mar  7 02:00:02 CET 2018] scale:10000 groups:10 work_mem:32MB incremental:off max_workers:0 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         ->  Seq Scan on s_3  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 25 [Wed Mar  7 02:00:02 CET 2018] scale:10000 groups:10 work_mem:64MB incremental:on max_workers:0 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 26 [Wed Mar  7 02:00:03 CET 2018] scale:10000 groups:10 work_mem:64MB incremental:on max_workers:0 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=954.15..954.15 rows=1 width=20)
+   ->  Incremental Sort  (cost=5.88..854.15 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         Presorted Key: s_2.a, s_2.b
+         ->  Index Only Scan using s_2_a_b_e_d_c_idx on s_2  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 27 [Wed Mar  7 02:00:03 CET 2018] scale:10000 groups:10 work_mem:64MB incremental:on max_workers:0 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.38..819.38 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.38 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         Presorted Key: s_3.a, s_3.b, s_3.c
+         ->  Index Only Scan using s_3_a_b_c_e_d_idx on s_3  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 28 [Wed Mar  7 02:00:03 CET 2018] scale:10000 groups:10 work_mem:64MB incremental:off max_workers:0 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 29 [Wed Mar  7 02:00:03 CET 2018] scale:10000 groups:10 work_mem:64MB incremental:off max_workers:0 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         ->  Seq Scan on s_2  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 30 [Wed Mar  7 02:00:03 CET 2018] scale:10000 groups:10 work_mem:64MB incremental:off max_workers:0 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         ->  Seq Scan on s_3  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 31 [Wed Mar  7 02:00:03 CET 2018] scale:10000 groups:10 work_mem:128MB incremental:on max_workers:0 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 32 [Wed Mar  7 02:00:03 CET 2018] scale:10000 groups:10 work_mem:128MB incremental:on max_workers:0 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=954.15..954.15 rows=1 width=20)
+   ->  Incremental Sort  (cost=5.88..854.15 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         Presorted Key: s_2.a, s_2.b
+         ->  Index Only Scan using s_2_a_b_e_d_c_idx on s_2  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 33 [Wed Mar  7 02:00:03 CET 2018] scale:10000 groups:10 work_mem:128MB incremental:on max_workers:0 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.38..819.38 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.38 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         Presorted Key: s_3.a, s_3.b, s_3.c
+         ->  Index Only Scan using s_3_a_b_c_e_d_idx on s_3  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 34 [Wed Mar  7 02:00:03 CET 2018] scale:10000 groups:10 work_mem:128MB incremental:off max_workers:0 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 35 [Wed Mar  7 02:00:03 CET 2018] scale:10000 groups:10 work_mem:128MB incremental:off max_workers:0 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         ->  Seq Scan on s_2  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 36 [Wed Mar  7 02:00:03 CET 2018] scale:10000 groups:10 work_mem:128MB incremental:off max_workers:0 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         ->  Seq Scan on s_3  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 37 [Wed Mar  7 02:00:04 CET 2018] scale:10000 groups:10 work_mem:256MB incremental:on max_workers:0 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 38 [Wed Mar  7 02:00:04 CET 2018] scale:10000 groups:10 work_mem:256MB incremental:on max_workers:0 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=954.15..954.15 rows=1 width=20)
+   ->  Incremental Sort  (cost=5.88..854.15 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         Presorted Key: s_2.a, s_2.b
+         ->  Index Only Scan using s_2_a_b_e_d_c_idx on s_2  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 39 [Wed Mar  7 02:00:04 CET 2018] scale:10000 groups:10 work_mem:256MB incremental:on max_workers:0 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.38..819.38 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.38 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         Presorted Key: s_3.a, s_3.b, s_3.c
+         ->  Index Only Scan using s_3_a_b_c_e_d_idx on s_3  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 40 [Wed Mar  7 02:00:04 CET 2018] scale:10000 groups:10 work_mem:256MB incremental:off max_workers:0 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 41 [Wed Mar  7 02:00:04 CET 2018] scale:10000 groups:10 work_mem:256MB incremental:off max_workers:0 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         ->  Seq Scan on s_2  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 42 [Wed Mar  7 02:00:04 CET 2018] scale:10000 groups:10 work_mem:256MB incremental:off max_workers:0 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         ->  Seq Scan on s_3  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 43 [Wed Mar  7 02:00:04 CET 2018] scale:10000 groups:10 work_mem:4MB incremental:on max_workers:2 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 44 [Wed Mar  7 02:00:04 CET 2018] scale:10000 groups:10 work_mem:4MB incremental:on max_workers:2 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=954.15..954.15 rows=1 width=20)
+   ->  Incremental Sort  (cost=5.88..854.15 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         Presorted Key: s_2.a, s_2.b
+         ->  Index Only Scan using s_2_a_b_e_d_c_idx on s_2  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 45 [Wed Mar  7 02:00:04 CET 2018] scale:10000 groups:10 work_mem:4MB incremental:on max_workers:2 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.38..819.38 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.38 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         Presorted Key: s_3.a, s_3.b, s_3.c
+         ->  Index Only Scan using s_3_a_b_c_e_d_idx on s_3  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 46 [Wed Mar  7 02:00:04 CET 2018] scale:10000 groups:10 work_mem:4MB incremental:off max_workers:2 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 47 [Wed Mar  7 02:00:05 CET 2018] scale:10000 groups:10 work_mem:4MB incremental:off max_workers:2 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         ->  Seq Scan on s_2  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 48 [Wed Mar  7 02:00:05 CET 2018] scale:10000 groups:10 work_mem:4MB incremental:off max_workers:2 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         ->  Seq Scan on s_3  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 49 [Wed Mar  7 02:00:05 CET 2018] scale:10000 groups:10 work_mem:8MB incremental:on max_workers:2 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 50 [Wed Mar  7 02:00:05 CET 2018] scale:10000 groups:10 work_mem:8MB incremental:on max_workers:2 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=954.15..954.15 rows=1 width=20)
+   ->  Incremental Sort  (cost=5.88..854.15 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         Presorted Key: s_2.a, s_2.b
+         ->  Index Only Scan using s_2_a_b_e_d_c_idx on s_2  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 51 [Wed Mar  7 02:00:05 CET 2018] scale:10000 groups:10 work_mem:8MB incremental:on max_workers:2 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.38..819.38 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.38 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         Presorted Key: s_3.a, s_3.b, s_3.c
+         ->  Index Only Scan using s_3_a_b_c_e_d_idx on s_3  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 52 [Wed Mar  7 02:00:05 CET 2018] scale:10000 groups:10 work_mem:8MB incremental:off max_workers:2 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 53 [Wed Mar  7 02:00:05 CET 2018] scale:10000 groups:10 work_mem:8MB incremental:off max_workers:2 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         ->  Seq Scan on s_2  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 54 [Wed Mar  7 02:00:05 CET 2018] scale:10000 groups:10 work_mem:8MB incremental:off max_workers:2 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         ->  Seq Scan on s_3  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 55 [Wed Mar  7 02:00:05 CET 2018] scale:10000 groups:10 work_mem:16MB incremental:on max_workers:2 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 56 [Wed Mar  7 02:00:05 CET 2018] scale:10000 groups:10 work_mem:16MB incremental:on max_workers:2 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=954.15..954.15 rows=1 width=20)
+   ->  Incremental Sort  (cost=5.88..854.15 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         Presorted Key: s_2.a, s_2.b
+         ->  Index Only Scan using s_2_a_b_e_d_c_idx on s_2  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 57 [Wed Mar  7 02:00:05 CET 2018] scale:10000 groups:10 work_mem:16MB incremental:on max_workers:2 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.38..819.38 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.38 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         Presorted Key: s_3.a, s_3.b, s_3.c
+         ->  Index Only Scan using s_3_a_b_c_e_d_idx on s_3  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 58 [Wed Mar  7 02:00:06 CET 2018] scale:10000 groups:10 work_mem:16MB incremental:off max_workers:2 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 59 [Wed Mar  7 02:00:06 CET 2018] scale:10000 groups:10 work_mem:16MB incremental:off max_workers:2 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         ->  Seq Scan on s_2  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 60 [Wed Mar  7 02:00:06 CET 2018] scale:10000 groups:10 work_mem:16MB incremental:off max_workers:2 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         ->  Seq Scan on s_3  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 61 [Wed Mar  7 02:00:06 CET 2018] scale:10000 groups:10 work_mem:32MB incremental:on max_workers:2 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 62 [Wed Mar  7 02:00:06 CET 2018] scale:10000 groups:10 work_mem:32MB incremental:on max_workers:2 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=954.15..954.15 rows=1 width=20)
+   ->  Incremental Sort  (cost=5.88..854.15 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         Presorted Key: s_2.a, s_2.b
+         ->  Index Only Scan using s_2_a_b_e_d_c_idx on s_2  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 63 [Wed Mar  7 02:00:06 CET 2018] scale:10000 groups:10 work_mem:32MB incremental:on max_workers:2 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.38..819.38 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.38 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         Presorted Key: s_3.a, s_3.b, s_3.c
+         ->  Index Only Scan using s_3_a_b_c_e_d_idx on s_3  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 64 [Wed Mar  7 02:00:06 CET 2018] scale:10000 groups:10 work_mem:32MB incremental:off max_workers:2 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 65 [Wed Mar  7 02:00:06 CET 2018] scale:10000 groups:10 work_mem:32MB incremental:off max_workers:2 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         ->  Seq Scan on s_2  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 66 [Wed Mar  7 02:00:06 CET 2018] scale:10000 groups:10 work_mem:32MB incremental:off max_workers:2 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         ->  Seq Scan on s_3  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 67 [Wed Mar  7 02:00:06 CET 2018] scale:10000 groups:10 work_mem:64MB incremental:on max_workers:2 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 68 [Wed Mar  7 02:00:07 CET 2018] scale:10000 groups:10 work_mem:64MB incremental:on max_workers:2 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=954.15..954.15 rows=1 width=20)
+   ->  Incremental Sort  (cost=5.88..854.15 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         Presorted Key: s_2.a, s_2.b
+         ->  Index Only Scan using s_2_a_b_e_d_c_idx on s_2  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 69 [Wed Mar  7 02:00:07 CET 2018] scale:10000 groups:10 work_mem:64MB incremental:on max_workers:2 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.38..819.38 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.38 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         Presorted Key: s_3.a, s_3.b, s_3.c
+         ->  Index Only Scan using s_3_a_b_c_e_d_idx on s_3  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 70 [Wed Mar  7 02:00:07 CET 2018] scale:10000 groups:10 work_mem:64MB incremental:off max_workers:2 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 71 [Wed Mar  7 02:00:07 CET 2018] scale:10000 groups:10 work_mem:64MB incremental:off max_workers:2 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         ->  Seq Scan on s_2  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 72 [Wed Mar  7 02:00:07 CET 2018] scale:10000 groups:10 work_mem:64MB incremental:off max_workers:2 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         ->  Seq Scan on s_3  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 73 [Wed Mar  7 02:00:07 CET 2018] scale:10000 groups:10 work_mem:128MB incremental:on max_workers:2 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 74 [Wed Mar  7 02:00:07 CET 2018] scale:10000 groups:10 work_mem:128MB incremental:on max_workers:2 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=954.15..954.15 rows=1 width=20)
+   ->  Incremental Sort  (cost=5.88..854.15 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         Presorted Key: s_2.a, s_2.b
+         ->  Index Only Scan using s_2_a_b_e_d_c_idx on s_2  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 75 [Wed Mar  7 02:00:07 CET 2018] scale:10000 groups:10 work_mem:128MB incremental:on max_workers:2 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.38..819.38 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.38 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         Presorted Key: s_3.a, s_3.b, s_3.c
+         ->  Index Only Scan using s_3_a_b_c_e_d_idx on s_3  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 76 [Wed Mar  7 02:00:07 CET 2018] scale:10000 groups:10 work_mem:128MB incremental:off max_workers:2 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 77 [Wed Mar  7 02:00:07 CET 2018] scale:10000 groups:10 work_mem:128MB incremental:off max_workers:2 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         ->  Seq Scan on s_2  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 78 [Wed Mar  7 02:00:07 CET 2018] scale:10000 groups:10 work_mem:128MB incremental:off max_workers:2 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         ->  Seq Scan on s_3  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 79 [Wed Mar  7 02:00:08 CET 2018] scale:10000 groups:10 work_mem:256MB incremental:on max_workers:2 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 80 [Wed Mar  7 02:00:08 CET 2018] scale:10000 groups:10 work_mem:256MB incremental:on max_workers:2 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=954.15..954.15 rows=1 width=20)
+   ->  Incremental Sort  (cost=5.88..854.15 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         Presorted Key: s_2.a, s_2.b
+         ->  Index Only Scan using s_2_a_b_e_d_c_idx on s_2  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 81 [Wed Mar  7 02:00:08 CET 2018] scale:10000 groups:10 work_mem:256MB incremental:on max_workers:2 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.38..819.38 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.38 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         Presorted Key: s_3.a, s_3.b, s_3.c
+         ->  Index Only Scan using s_3_a_b_c_e_d_idx on s_3  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 82 [Wed Mar  7 02:00:08 CET 2018] scale:10000 groups:10 work_mem:256MB incremental:off max_workers:2 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 83 [Wed Mar  7 02:00:08 CET 2018] scale:10000 groups:10 work_mem:256MB incremental:off max_workers:2 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         ->  Seq Scan on s_2  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 84 [Wed Mar  7 02:00:08 CET 2018] scale:10000 groups:10 work_mem:256MB incremental:off max_workers:2 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         ->  Seq Scan on s_3  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 85 [Wed Mar  7 02:00:09 CET 2018] scale:10000 groups:100 work_mem:4MB incremental:on max_workers:0 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 86 [Wed Mar  7 02:00:09 CET 2018] scale:10000 groups:100 work_mem:4MB incremental:on max_workers:0 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.38..819.38 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.38 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         Presorted Key: s_2.a, s_2.b
+         ->  Index Only Scan using s_2_a_b_e_d_c_idx on s_2  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 87 [Wed Mar  7 02:00:09 CET 2018] scale:10000 groups:100 work_mem:4MB incremental:on max_workers:0 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.38..819.38 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.38 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         Presorted Key: s_3.a, s_3.b, s_3.c
+         ->  Index Only Scan using s_3_a_b_c_e_d_idx on s_3  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 88 [Wed Mar  7 02:00:09 CET 2018] scale:10000 groups:100 work_mem:4MB incremental:off max_workers:0 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 89 [Wed Mar  7 02:00:09 CET 2018] scale:10000 groups:100 work_mem:4MB incremental:off max_workers:0 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         ->  Seq Scan on s_2  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 90 [Wed Mar  7 02:00:09 CET 2018] scale:10000 groups:100 work_mem:4MB incremental:off max_workers:0 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         ->  Seq Scan on s_3  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 91 [Wed Mar  7 02:00:09 CET 2018] scale:10000 groups:100 work_mem:8MB incremental:on max_workers:0 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 92 [Wed Mar  7 02:00:10 CET 2018] scale:10000 groups:100 work_mem:8MB incremental:on max_workers:0 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.38..819.38 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.38 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         Presorted Key: s_2.a, s_2.b
+         ->  Index Only Scan using s_2_a_b_e_d_c_idx on s_2  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 93 [Wed Mar  7 02:00:10 CET 2018] scale:10000 groups:100 work_mem:8MB incremental:on max_workers:0 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.38..819.38 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.38 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         Presorted Key: s_3.a, s_3.b, s_3.c
+         ->  Index Only Scan using s_3_a_b_c_e_d_idx on s_3  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 94 [Wed Mar  7 02:00:10 CET 2018] scale:10000 groups:100 work_mem:8MB incremental:off max_workers:0 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 95 [Wed Mar  7 02:00:10 CET 2018] scale:10000 groups:100 work_mem:8MB incremental:off max_workers:0 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         ->  Seq Scan on s_2  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 96 [Wed Mar  7 02:00:10 CET 2018] scale:10000 groups:100 work_mem:8MB incremental:off max_workers:0 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         ->  Seq Scan on s_3  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 97 [Wed Mar  7 02:00:10 CET 2018] scale:10000 groups:100 work_mem:16MB incremental:on max_workers:0 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 98 [Wed Mar  7 02:00:10 CET 2018] scale:10000 groups:100 work_mem:16MB incremental:on max_workers:0 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.38..819.38 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.38 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         Presorted Key: s_2.a, s_2.b
+         ->  Index Only Scan using s_2_a_b_e_d_c_idx on s_2  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 99 [Wed Mar  7 02:00:10 CET 2018] scale:10000 groups:100 work_mem:16MB incremental:on max_workers:0 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.38..819.38 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.38 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         Presorted Key: s_3.a, s_3.b, s_3.c
+         ->  Index Only Scan using s_3_a_b_c_e_d_idx on s_3  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 100 [Wed Mar  7 02:00:10 CET 2018] scale:10000 groups:100 work_mem:16MB incremental:off max_workers:0 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 101 [Wed Mar  7 02:00:10 CET 2018] scale:10000 groups:100 work_mem:16MB incremental:off max_workers:0 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         ->  Seq Scan on s_2  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 102 [Wed Mar  7 02:00:10 CET 2018] scale:10000 groups:100 work_mem:16MB incremental:off max_workers:0 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         ->  Seq Scan on s_3  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 103 [Wed Mar  7 02:00:11 CET 2018] scale:10000 groups:100 work_mem:32MB incremental:on max_workers:0 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 104 [Wed Mar  7 02:00:11 CET 2018] scale:10000 groups:100 work_mem:32MB incremental:on max_workers:0 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.38..819.38 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.38 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         Presorted Key: s_2.a, s_2.b
+         ->  Index Only Scan using s_2_a_b_e_d_c_idx on s_2  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 105 [Wed Mar  7 02:00:11 CET 2018] scale:10000 groups:100 work_mem:32MB incremental:on max_workers:0 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.38..819.38 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.38 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         Presorted Key: s_3.a, s_3.b, s_3.c
+         ->  Index Only Scan using s_3_a_b_c_e_d_idx on s_3  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 106 [Wed Mar  7 02:00:11 CET 2018] scale:10000 groups:100 work_mem:32MB incremental:off max_workers:0 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 107 [Wed Mar  7 02:00:11 CET 2018] scale:10000 groups:100 work_mem:32MB incremental:off max_workers:0 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         ->  Seq Scan on s_2  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 108 [Wed Mar  7 02:00:11 CET 2018] scale:10000 groups:100 work_mem:32MB incremental:off max_workers:0 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         ->  Seq Scan on s_3  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 109 [Wed Mar  7 02:00:11 CET 2018] scale:10000 groups:100 work_mem:64MB incremental:on max_workers:0 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 110 [Wed Mar  7 02:00:11 CET 2018] scale:10000 groups:100 work_mem:64MB incremental:on max_workers:0 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.38..819.38 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.38 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         Presorted Key: s_2.a, s_2.b
+         ->  Index Only Scan using s_2_a_b_e_d_c_idx on s_2  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 111 [Wed Mar  7 02:00:11 CET 2018] scale:10000 groups:100 work_mem:64MB incremental:on max_workers:0 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.38..819.38 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.38 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         Presorted Key: s_3.a, s_3.b, s_3.c
+         ->  Index Only Scan using s_3_a_b_c_e_d_idx on s_3  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 112 [Wed Mar  7 02:00:11 CET 2018] scale:10000 groups:100 work_mem:64MB incremental:off max_workers:0 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 113 [Wed Mar  7 02:00:11 CET 2018] scale:10000 groups:100 work_mem:64MB incremental:off max_workers:0 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         ->  Seq Scan on s_2  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 114 [Wed Mar  7 02:00:12 CET 2018] scale:10000 groups:100 work_mem:64MB incremental:off max_workers:0 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         ->  Seq Scan on s_3  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 115 [Wed Mar  7 02:00:12 CET 2018] scale:10000 groups:100 work_mem:128MB incremental:on max_workers:0 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 116 [Wed Mar  7 02:00:12 CET 2018] scale:10000 groups:100 work_mem:128MB incremental:on max_workers:0 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.38..819.38 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.38 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         Presorted Key: s_2.a, s_2.b
+         ->  Index Only Scan using s_2_a_b_e_d_c_idx on s_2  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 117 [Wed Mar  7 02:00:12 CET 2018] scale:10000 groups:100 work_mem:128MB incremental:on max_workers:0 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.38..819.38 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.38 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         Presorted Key: s_3.a, s_3.b, s_3.c
+         ->  Index Only Scan using s_3_a_b_c_e_d_idx on s_3  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 118 [Wed Mar  7 02:00:12 CET 2018] scale:10000 groups:100 work_mem:128MB incremental:off max_workers:0 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 119 [Wed Mar  7 02:00:12 CET 2018] scale:10000 groups:100 work_mem:128MB incremental:off max_workers:0 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         ->  Seq Scan on s_2  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 120 [Wed Mar  7 02:00:12 CET 2018] scale:10000 groups:100 work_mem:128MB incremental:off max_workers:0 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         ->  Seq Scan on s_3  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 121 [Wed Mar  7 02:00:12 CET 2018] scale:10000 groups:100 work_mem:256MB incremental:on max_workers:0 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 122 [Wed Mar  7 02:00:12 CET 2018] scale:10000 groups:100 work_mem:256MB incremental:on max_workers:0 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.38..819.38 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.38 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         Presorted Key: s_2.a, s_2.b
+         ->  Index Only Scan using s_2_a_b_e_d_c_idx on s_2  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 123 [Wed Mar  7 02:00:12 CET 2018] scale:10000 groups:100 work_mem:256MB incremental:on max_workers:0 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.38..819.38 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.38 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         Presorted Key: s_3.a, s_3.b, s_3.c
+         ->  Index Only Scan using s_3_a_b_c_e_d_idx on s_3  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 124 [Wed Mar  7 02:00:12 CET 2018] scale:10000 groups:100 work_mem:256MB incremental:off max_workers:0 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 125 [Wed Mar  7 02:00:13 CET 2018] scale:10000 groups:100 work_mem:256MB incremental:off max_workers:0 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         ->  Seq Scan on s_2  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 126 [Wed Mar  7 02:00:13 CET 2018] scale:10000 groups:100 work_mem:256MB incremental:off max_workers:0 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         ->  Seq Scan on s_3  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 127 [Wed Mar  7 02:00:13 CET 2018] scale:10000 groups:100 work_mem:4MB incremental:on max_workers:2 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 128 [Wed Mar  7 02:00:13 CET 2018] scale:10000 groups:100 work_mem:4MB incremental:on max_workers:2 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.38..819.38 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.38 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         Presorted Key: s_2.a, s_2.b
+         ->  Index Only Scan using s_2_a_b_e_d_c_idx on s_2  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 129 [Wed Mar  7 02:00:13 CET 2018] scale:10000 groups:100 work_mem:4MB incremental:on max_workers:2 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.38..819.38 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.38 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         Presorted Key: s_3.a, s_3.b, s_3.c
+         ->  Index Only Scan using s_3_a_b_c_e_d_idx on s_3  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 130 [Wed Mar  7 02:00:13 CET 2018] scale:10000 groups:100 work_mem:4MB incremental:off max_workers:2 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 131 [Wed Mar  7 02:00:13 CET 2018] scale:10000 groups:100 work_mem:4MB incremental:off max_workers:2 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         ->  Seq Scan on s_2  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 132 [Wed Mar  7 02:00:13 CET 2018] scale:10000 groups:100 work_mem:4MB incremental:off max_workers:2 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         ->  Seq Scan on s_3  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 133 [Wed Mar  7 02:00:13 CET 2018] scale:10000 groups:100 work_mem:8MB incremental:on max_workers:2 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 134 [Wed Mar  7 02:00:13 CET 2018] scale:10000 groups:100 work_mem:8MB incremental:on max_workers:2 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.38..819.38 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.38 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         Presorted Key: s_2.a, s_2.b
+         ->  Index Only Scan using s_2_a_b_e_d_c_idx on s_2  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 135 [Wed Mar  7 02:00:13 CET 2018] scale:10000 groups:100 work_mem:8MB incremental:on max_workers:2 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.38..819.38 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.38 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         Presorted Key: s_3.a, s_3.b, s_3.c
+         ->  Index Only Scan using s_3_a_b_c_e_d_idx on s_3  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 136 [Wed Mar  7 02:00:14 CET 2018] scale:10000 groups:100 work_mem:8MB incremental:off max_workers:2 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 137 [Wed Mar  7 02:00:14 CET 2018] scale:10000 groups:100 work_mem:8MB incremental:off max_workers:2 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         ->  Seq Scan on s_2  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 138 [Wed Mar  7 02:00:14 CET 2018] scale:10000 groups:100 work_mem:8MB incremental:off max_workers:2 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         ->  Seq Scan on s_3  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 139 [Wed Mar  7 02:00:14 CET 2018] scale:10000 groups:100 work_mem:16MB incremental:on max_workers:2 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 140 [Wed Mar  7 02:00:14 CET 2018] scale:10000 groups:100 work_mem:16MB incremental:on max_workers:2 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.38..819.38 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.38 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         Presorted Key: s_2.a, s_2.b
+         ->  Index Only Scan using s_2_a_b_e_d_c_idx on s_2  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 141 [Wed Mar  7 02:00:14 CET 2018] scale:10000 groups:100 work_mem:16MB incremental:on max_workers:2 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.38..819.38 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.38 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         Presorted Key: s_3.a, s_3.b, s_3.c
+         ->  Index Only Scan using s_3_a_b_c_e_d_idx on s_3  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 142 [Wed Mar  7 02:00:14 CET 2018] scale:10000 groups:100 work_mem:16MB incremental:off max_workers:2 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 143 [Wed Mar  7 02:00:14 CET 2018] scale:10000 groups:100 work_mem:16MB incremental:off max_workers:2 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         ->  Seq Scan on s_2  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 144 [Wed Mar  7 02:00:14 CET 2018] scale:10000 groups:100 work_mem:16MB incremental:off max_workers:2 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         ->  Seq Scan on s_3  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 145 [Wed Mar  7 02:00:14 CET 2018] scale:10000 groups:100 work_mem:32MB incremental:on max_workers:2 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 146 [Wed Mar  7 02:00:15 CET 2018] scale:10000 groups:100 work_mem:32MB incremental:on max_workers:2 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.38..819.38 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.38 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         Presorted Key: s_2.a, s_2.b
+         ->  Index Only Scan using s_2_a_b_e_d_c_idx on s_2  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 147 [Wed Mar  7 02:00:15 CET 2018] scale:10000 groups:100 work_mem:32MB incremental:on max_workers:2 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.38..819.38 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.38 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         Presorted Key: s_3.a, s_3.b, s_3.c
+         ->  Index Only Scan using s_3_a_b_c_e_d_idx on s_3  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 148 [Wed Mar  7 02:00:15 CET 2018] scale:10000 groups:100 work_mem:32MB incremental:off max_workers:2 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 149 [Wed Mar  7 02:00:15 CET 2018] scale:10000 groups:100 work_mem:32MB incremental:off max_workers:2 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         ->  Seq Scan on s_2  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 150 [Wed Mar  7 02:00:15 CET 2018] scale:10000 groups:100 work_mem:32MB incremental:off max_workers:2 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         ->  Seq Scan on s_3  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 151 [Wed Mar  7 02:00:15 CET 2018] scale:10000 groups:100 work_mem:64MB incremental:on max_workers:2 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 152 [Wed Mar  7 02:00:15 CET 2018] scale:10000 groups:100 work_mem:64MB incremental:on max_workers:2 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.38..819.38 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.38 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         Presorted Key: s_2.a, s_2.b
+         ->  Index Only Scan using s_2_a_b_e_d_c_idx on s_2  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 153 [Wed Mar  7 02:00:15 CET 2018] scale:10000 groups:100 work_mem:64MB incremental:on max_workers:2 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.38..819.38 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.38 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         Presorted Key: s_3.a, s_3.b, s_3.c
+         ->  Index Only Scan using s_3_a_b_c_e_d_idx on s_3  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 154 [Wed Mar  7 02:00:15 CET 2018] scale:10000 groups:100 work_mem:64MB incremental:off max_workers:2 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 155 [Wed Mar  7 02:00:15 CET 2018] scale:10000 groups:100 work_mem:64MB incremental:off max_workers:2 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         ->  Seq Scan on s_2  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 156 [Wed Mar  7 02:00:15 CET 2018] scale:10000 groups:100 work_mem:64MB incremental:off max_workers:2 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         ->  Seq Scan on s_3  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 157 [Wed Mar  7 02:00:16 CET 2018] scale:10000 groups:100 work_mem:128MB incremental:on max_workers:2 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 158 [Wed Mar  7 02:00:16 CET 2018] scale:10000 groups:100 work_mem:128MB incremental:on max_workers:2 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.38..819.38 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.38 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         Presorted Key: s_2.a, s_2.b
+         ->  Index Only Scan using s_2_a_b_e_d_c_idx on s_2  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 159 [Wed Mar  7 02:00:16 CET 2018] scale:10000 groups:100 work_mem:128MB incremental:on max_workers:2 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.38..819.38 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.38 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         Presorted Key: s_3.a, s_3.b, s_3.c
+         ->  Index Only Scan using s_3_a_b_c_e_d_idx on s_3  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 160 [Wed Mar  7 02:00:16 CET 2018] scale:10000 groups:100 work_mem:128MB incremental:off max_workers:2 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 161 [Wed Mar  7 02:00:16 CET 2018] scale:10000 groups:100 work_mem:128MB incremental:off max_workers:2 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         ->  Seq Scan on s_2  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 162 [Wed Mar  7 02:00:16 CET 2018] scale:10000 groups:100 work_mem:128MB incremental:off max_workers:2 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         ->  Seq Scan on s_3  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 163 [Wed Mar  7 02:00:16 CET 2018] scale:10000 groups:100 work_mem:256MB incremental:on max_workers:2 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 164 [Wed Mar  7 02:00:16 CET 2018] scale:10000 groups:100 work_mem:256MB incremental:on max_workers:2 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.38..819.38 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.38 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         Presorted Key: s_2.a, s_2.b
+         ->  Index Only Scan using s_2_a_b_e_d_c_idx on s_2  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 165 [Wed Mar  7 02:00:16 CET 2018] scale:10000 groups:100 work_mem:256MB incremental:on max_workers:2 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.38..819.38 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.38 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         Presorted Key: s_3.a, s_3.b, s_3.c
+         ->  Index Only Scan using s_3_a_b_c_e_d_idx on s_3  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 166 [Wed Mar  7 02:00:16 CET 2018] scale:10000 groups:100 work_mem:256MB incremental:off max_workers:2 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 167 [Wed Mar  7 02:00:16 CET 2018] scale:10000 groups:100 work_mem:256MB incremental:off max_workers:2 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         ->  Seq Scan on s_2  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 168 [Wed Mar  7 02:00:17 CET 2018] scale:10000 groups:100 work_mem:256MB incremental:off max_workers:2 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         ->  Seq Scan on s_3  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 169 [Wed Mar  7 02:00:17 CET 2018] scale:10000 groups:1000 work_mem:4MB incremental:on max_workers:0 =====
+SELECT * FROM s_1 ORDER BY a, b
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.33..819.33 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.33 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         Presorted Key: s_1.a
+         ->  Index Only Scan using s_1_a_e_d_c_b_idx on s_1  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 170 [Wed Mar  7 02:00:17 CET 2018] scale:10000 groups:1000 work_mem:4MB incremental:on max_workers:0 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.33..819.33 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.33 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         Presorted Key: s_2.a, s_2.b
+         ->  Index Only Scan using s_2_a_b_e_d_c_idx on s_2  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 171 [Wed Mar  7 02:00:18 CET 2018] scale:10000 groups:1000 work_mem:4MB incremental:on max_workers:0 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.33..819.33 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.33 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         Presorted Key: s_3.a, s_3.b, s_3.c
+         ->  Index Only Scan using s_3_a_b_c_e_d_idx on s_3  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 172 [Wed Mar  7 02:00:18 CET 2018] scale:10000 groups:1000 work_mem:4MB incremental:off max_workers:0 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 173 [Wed Mar  7 02:00:18 CET 2018] scale:10000 groups:1000 work_mem:4MB incremental:off max_workers:0 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         ->  Seq Scan on s_2  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 174 [Wed Mar  7 02:00:18 CET 2018] scale:10000 groups:1000 work_mem:4MB incremental:off max_workers:0 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         ->  Seq Scan on s_3  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 175 [Wed Mar  7 02:00:18 CET 2018] scale:10000 groups:1000 work_mem:8MB incremental:on max_workers:0 =====
+SELECT * FROM s_1 ORDER BY a, b
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.33..819.33 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.33 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         Presorted Key: s_1.a
+         ->  Index Only Scan using s_1_a_e_d_c_b_idx on s_1  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 176 [Wed Mar  7 02:00:18 CET 2018] scale:10000 groups:1000 work_mem:8MB incremental:on max_workers:0 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.33..819.33 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.33 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         Presorted Key: s_2.a, s_2.b
+         ->  Index Only Scan using s_2_a_b_e_d_c_idx on s_2  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 177 [Wed Mar  7 02:00:18 CET 2018] scale:10000 groups:1000 work_mem:8MB incremental:on max_workers:0 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.33..819.33 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.33 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         Presorted Key: s_3.a, s_3.b, s_3.c
+         ->  Index Only Scan using s_3_a_b_c_e_d_idx on s_3  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 178 [Wed Mar  7 02:00:18 CET 2018] scale:10000 groups:1000 work_mem:8MB incremental:off max_workers:0 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 179 [Wed Mar  7 02:00:18 CET 2018] scale:10000 groups:1000 work_mem:8MB incremental:off max_workers:0 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         ->  Seq Scan on s_2  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 180 [Wed Mar  7 02:00:18 CET 2018] scale:10000 groups:1000 work_mem:8MB incremental:off max_workers:0 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         ->  Seq Scan on s_3  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 181 [Wed Mar  7 02:00:18 CET 2018] scale:10000 groups:1000 work_mem:16MB incremental:on max_workers:0 =====
+SELECT * FROM s_1 ORDER BY a, b
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.33..819.33 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.33 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         Presorted Key: s_1.a
+         ->  Index Only Scan using s_1_a_e_d_c_b_idx on s_1  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 182 [Wed Mar  7 02:00:19 CET 2018] scale:10000 groups:1000 work_mem:16MB incremental:on max_workers:0 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.33..819.33 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.33 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         Presorted Key: s_2.a, s_2.b
+         ->  Index Only Scan using s_2_a_b_e_d_c_idx on s_2  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 183 [Wed Mar  7 02:00:19 CET 2018] scale:10000 groups:1000 work_mem:16MB incremental:on max_workers:0 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.33..819.33 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.33 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         Presorted Key: s_3.a, s_3.b, s_3.c
+         ->  Index Only Scan using s_3_a_b_c_e_d_idx on s_3  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 184 [Wed Mar  7 02:00:19 CET 2018] scale:10000 groups:1000 work_mem:16MB incremental:off max_workers:0 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 185 [Wed Mar  7 02:00:19 CET 2018] scale:10000 groups:1000 work_mem:16MB incremental:off max_workers:0 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         ->  Seq Scan on s_2  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 186 [Wed Mar  7 02:00:19 CET 2018] scale:10000 groups:1000 work_mem:16MB incremental:off max_workers:0 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         ->  Seq Scan on s_3  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 187 [Wed Mar  7 02:00:19 CET 2018] scale:10000 groups:1000 work_mem:32MB incremental:on max_workers:0 =====
+SELECT * FROM s_1 ORDER BY a, b
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.33..819.33 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.33 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         Presorted Key: s_1.a
+         ->  Index Only Scan using s_1_a_e_d_c_b_idx on s_1  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 188 [Wed Mar  7 02:00:19 CET 2018] scale:10000 groups:1000 work_mem:32MB incremental:on max_workers:0 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.33..819.33 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.33 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         Presorted Key: s_2.a, s_2.b
+         ->  Index Only Scan using s_2_a_b_e_d_c_idx on s_2  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 189 [Wed Mar  7 02:00:19 CET 2018] scale:10000 groups:1000 work_mem:32MB incremental:on max_workers:0 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.33..819.33 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.33 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         Presorted Key: s_3.a, s_3.b, s_3.c
+         ->  Index Only Scan using s_3_a_b_c_e_d_idx on s_3  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 190 [Wed Mar  7 02:00:19 CET 2018] scale:10000 groups:1000 work_mem:32MB incremental:off max_workers:0 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 191 [Wed Mar  7 02:00:19 CET 2018] scale:10000 groups:1000 work_mem:32MB incremental:off max_workers:0 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         ->  Seq Scan on s_2  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 192 [Wed Mar  7 02:00:19 CET 2018] scale:10000 groups:1000 work_mem:32MB incremental:off max_workers:0 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         ->  Seq Scan on s_3  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 193 [Wed Mar  7 02:00:20 CET 2018] scale:10000 groups:1000 work_mem:64MB incremental:on max_workers:0 =====
+SELECT * FROM s_1 ORDER BY a, b
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.33..819.33 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.33 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         Presorted Key: s_1.a
+         ->  Index Only Scan using s_1_a_e_d_c_b_idx on s_1  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 194 [Wed Mar  7 02:00:20 CET 2018] scale:10000 groups:1000 work_mem:64MB incremental:on max_workers:0 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.33..819.33 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.33 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         Presorted Key: s_2.a, s_2.b
+         ->  Index Only Scan using s_2_a_b_e_d_c_idx on s_2  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 195 [Wed Mar  7 02:00:20 CET 2018] scale:10000 groups:1000 work_mem:64MB incremental:on max_workers:0 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.33..819.33 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.33 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         Presorted Key: s_3.a, s_3.b, s_3.c
+         ->  Index Only Scan using s_3_a_b_c_e_d_idx on s_3  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 196 [Wed Mar  7 02:00:20 CET 2018] scale:10000 groups:1000 work_mem:64MB incremental:off max_workers:0 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 197 [Wed Mar  7 02:00:20 CET 2018] scale:10000 groups:1000 work_mem:64MB incremental:off max_workers:0 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         ->  Seq Scan on s_2  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 198 [Wed Mar  7 02:00:20 CET 2018] scale:10000 groups:1000 work_mem:64MB incremental:off max_workers:0 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         ->  Seq Scan on s_3  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 199 [Wed Mar  7 02:00:20 CET 2018] scale:10000 groups:1000 work_mem:128MB incremental:on max_workers:0 =====
+SELECT * FROM s_1 ORDER BY a, b
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.33..819.33 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.33 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         Presorted Key: s_1.a
+         ->  Index Only Scan using s_1_a_e_d_c_b_idx on s_1  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 200 [Wed Mar  7 02:00:20 CET 2018] scale:10000 groups:1000 work_mem:128MB incremental:on max_workers:0 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.33..819.33 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.33 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         Presorted Key: s_2.a, s_2.b
+         ->  Index Only Scan using s_2_a_b_e_d_c_idx on s_2  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 201 [Wed Mar  7 02:00:20 CET 2018] scale:10000 groups:1000 work_mem:128MB incremental:on max_workers:0 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.33..819.33 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.33 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         Presorted Key: s_3.a, s_3.b, s_3.c
+         ->  Index Only Scan using s_3_a_b_c_e_d_idx on s_3  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 202 [Wed Mar  7 02:00:20 CET 2018] scale:10000 groups:1000 work_mem:128MB incremental:off max_workers:0 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 203 [Wed Mar  7 02:00:20 CET 2018] scale:10000 groups:1000 work_mem:128MB incremental:off max_workers:0 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         ->  Seq Scan on s_2  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 204 [Wed Mar  7 02:00:21 CET 2018] scale:10000 groups:1000 work_mem:128MB incremental:off max_workers:0 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         ->  Seq Scan on s_3  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 205 [Wed Mar  7 02:00:21 CET 2018] scale:10000 groups:1000 work_mem:256MB incremental:on max_workers:0 =====
+SELECT * FROM s_1 ORDER BY a, b
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.33..819.33 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.33 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         Presorted Key: s_1.a
+         ->  Index Only Scan using s_1_a_e_d_c_b_idx on s_1  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 206 [Wed Mar  7 02:00:21 CET 2018] scale:10000 groups:1000 work_mem:256MB incremental:on max_workers:0 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.33..819.33 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.33 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         Presorted Key: s_2.a, s_2.b
+         ->  Index Only Scan using s_2_a_b_e_d_c_idx on s_2  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 207 [Wed Mar  7 02:00:21 CET 2018] scale:10000 groups:1000 work_mem:256MB incremental:on max_workers:0 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.33..819.33 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.33 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         Presorted Key: s_3.a, s_3.b, s_3.c
+         ->  Index Only Scan using s_3_a_b_c_e_d_idx on s_3  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 208 [Wed Mar  7 02:00:21 CET 2018] scale:10000 groups:1000 work_mem:256MB incremental:off max_workers:0 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 209 [Wed Mar  7 02:00:21 CET 2018] scale:10000 groups:1000 work_mem:256MB incremental:off max_workers:0 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         ->  Seq Scan on s_2  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 210 [Wed Mar  7 02:00:21 CET 2018] scale:10000 groups:1000 work_mem:256MB incremental:off max_workers:0 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         ->  Seq Scan on s_3  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 211 [Wed Mar  7 02:00:21 CET 2018] scale:10000 groups:1000 work_mem:4MB incremental:on max_workers:2 =====
+SELECT * FROM s_1 ORDER BY a, b
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.33..819.33 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.33 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         Presorted Key: s_1.a
+         ->  Index Only Scan using s_1_a_e_d_c_b_idx on s_1  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 212 [Wed Mar  7 02:00:21 CET 2018] scale:10000 groups:1000 work_mem:4MB incremental:on max_workers:2 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.33..819.33 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.33 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         Presorted Key: s_2.a, s_2.b
+         ->  Index Only Scan using s_2_a_b_e_d_c_idx on s_2  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 213 [Wed Mar  7 02:00:21 CET 2018] scale:10000 groups:1000 work_mem:4MB incremental:on max_workers:2 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.33..819.33 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.33 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         Presorted Key: s_3.a, s_3.b, s_3.c
+         ->  Index Only Scan using s_3_a_b_c_e_d_idx on s_3  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 214 [Wed Mar  7 02:00:21 CET 2018] scale:10000 groups:1000 work_mem:4MB incremental:off max_workers:2 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 215 [Wed Mar  7 02:00:22 CET 2018] scale:10000 groups:1000 work_mem:4MB incremental:off max_workers:2 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         ->  Seq Scan on s_2  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 216 [Wed Mar  7 02:00:22 CET 2018] scale:10000 groups:1000 work_mem:4MB incremental:off max_workers:2 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         ->  Seq Scan on s_3  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 217 [Wed Mar  7 02:00:22 CET 2018] scale:10000 groups:1000 work_mem:8MB incremental:on max_workers:2 =====
+SELECT * FROM s_1 ORDER BY a, b
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.33..819.33 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.33 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         Presorted Key: s_1.a
+         ->  Index Only Scan using s_1_a_e_d_c_b_idx on s_1  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 218 [Wed Mar  7 02:00:22 CET 2018] scale:10000 groups:1000 work_mem:8MB incremental:on max_workers:2 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.33..819.33 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.33 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         Presorted Key: s_2.a, s_2.b
+         ->  Index Only Scan using s_2_a_b_e_d_c_idx on s_2  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 219 [Wed Mar  7 02:00:22 CET 2018] scale:10000 groups:1000 work_mem:8MB incremental:on max_workers:2 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.33..819.33 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.33 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         Presorted Key: s_3.a, s_3.b, s_3.c
+         ->  Index Only Scan using s_3_a_b_c_e_d_idx on s_3  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 220 [Wed Mar  7 02:00:22 CET 2018] scale:10000 groups:1000 work_mem:8MB incremental:off max_workers:2 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 221 [Wed Mar  7 02:00:22 CET 2018] scale:10000 groups:1000 work_mem:8MB incremental:off max_workers:2 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         ->  Seq Scan on s_2  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 222 [Wed Mar  7 02:00:22 CET 2018] scale:10000 groups:1000 work_mem:8MB incremental:off max_workers:2 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         ->  Seq Scan on s_3  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 223 [Wed Mar  7 02:00:22 CET 2018] scale:10000 groups:1000 work_mem:16MB incremental:on max_workers:2 =====
+SELECT * FROM s_1 ORDER BY a, b
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.33..819.33 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.33 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         Presorted Key: s_1.a
+         ->  Index Only Scan using s_1_a_e_d_c_b_idx on s_1  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 224 [Wed Mar  7 02:00:22 CET 2018] scale:10000 groups:1000 work_mem:16MB incremental:on max_workers:2 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.33..819.33 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.33 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         Presorted Key: s_2.a, s_2.b
+         ->  Index Only Scan using s_2_a_b_e_d_c_idx on s_2  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 225 [Wed Mar  7 02:00:22 CET 2018] scale:10000 groups:1000 work_mem:16MB incremental:on max_workers:2 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.33..819.33 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.33 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         Presorted Key: s_3.a, s_3.b, s_3.c
+         ->  Index Only Scan using s_3_a_b_c_e_d_idx on s_3  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 226 [Wed Mar  7 02:00:23 CET 2018] scale:10000 groups:1000 work_mem:16MB incremental:off max_workers:2 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 227 [Wed Mar  7 02:00:23 CET 2018] scale:10000 groups:1000 work_mem:16MB incremental:off max_workers:2 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         ->  Seq Scan on s_2  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 228 [Wed Mar  7 02:00:23 CET 2018] scale:10000 groups:1000 work_mem:16MB incremental:off max_workers:2 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         ->  Seq Scan on s_3  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 229 [Wed Mar  7 02:00:23 CET 2018] scale:10000 groups:1000 work_mem:32MB incremental:on max_workers:2 =====
+SELECT * FROM s_1 ORDER BY a, b
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.33..819.33 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.33 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         Presorted Key: s_1.a
+         ->  Index Only Scan using s_1_a_e_d_c_b_idx on s_1  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 230 [Wed Mar  7 02:00:23 CET 2018] scale:10000 groups:1000 work_mem:32MB incremental:on max_workers:2 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.33..819.33 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.33 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         Presorted Key: s_2.a, s_2.b
+         ->  Index Only Scan using s_2_a_b_e_d_c_idx on s_2  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 231 [Wed Mar  7 02:00:23 CET 2018] scale:10000 groups:1000 work_mem:32MB incremental:on max_workers:2 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.33..819.33 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.33 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         Presorted Key: s_3.a, s_3.b, s_3.c
+         ->  Index Only Scan using s_3_a_b_c_e_d_idx on s_3  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 232 [Wed Mar  7 02:00:23 CET 2018] scale:10000 groups:1000 work_mem:32MB incremental:off max_workers:2 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 233 [Wed Mar  7 02:00:23 CET 2018] scale:10000 groups:1000 work_mem:32MB incremental:off max_workers:2 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         ->  Seq Scan on s_2  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 234 [Wed Mar  7 02:00:23 CET 2018] scale:10000 groups:1000 work_mem:32MB incremental:off max_workers:2 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         ->  Seq Scan on s_3  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 235 [Wed Mar  7 02:00:23 CET 2018] scale:10000 groups:1000 work_mem:64MB incremental:on max_workers:2 =====
+SELECT * FROM s_1 ORDER BY a, b
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.33..819.33 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.33 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         Presorted Key: s_1.a
+         ->  Index Only Scan using s_1_a_e_d_c_b_idx on s_1  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 236 [Wed Mar  7 02:00:23 CET 2018] scale:10000 groups:1000 work_mem:64MB incremental:on max_workers:2 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.33..819.33 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.33 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         Presorted Key: s_2.a, s_2.b
+         ->  Index Only Scan using s_2_a_b_e_d_c_idx on s_2  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 237 [Wed Mar  7 02:00:23 CET 2018] scale:10000 groups:1000 work_mem:64MB incremental:on max_workers:2 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.33..819.33 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.33 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         Presorted Key: s_3.a, s_3.b, s_3.c
+         ->  Index Only Scan using s_3_a_b_c_e_d_idx on s_3  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 238 [Wed Mar  7 02:00:24 CET 2018] scale:10000 groups:1000 work_mem:64MB incremental:off max_workers:2 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 239 [Wed Mar  7 02:00:24 CET 2018] scale:10000 groups:1000 work_mem:64MB incremental:off max_workers:2 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         ->  Seq Scan on s_2  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 240 [Wed Mar  7 02:00:24 CET 2018] scale:10000 groups:1000 work_mem:64MB incremental:off max_workers:2 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         ->  Seq Scan on s_3  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 241 [Wed Mar  7 02:00:24 CET 2018] scale:10000 groups:1000 work_mem:128MB incremental:on max_workers:2 =====
+SELECT * FROM s_1 ORDER BY a, b
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.33..819.33 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.33 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         Presorted Key: s_1.a
+         ->  Index Only Scan using s_1_a_e_d_c_b_idx on s_1  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 242 [Wed Mar  7 02:00:24 CET 2018] scale:10000 groups:1000 work_mem:128MB incremental:on max_workers:2 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.33..819.33 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.33 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         Presorted Key: s_2.a, s_2.b
+         ->  Index Only Scan using s_2_a_b_e_d_c_idx on s_2  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 243 [Wed Mar  7 02:00:24 CET 2018] scale:10000 groups:1000 work_mem:128MB incremental:on max_workers:2 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.33..819.33 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.33 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         Presorted Key: s_3.a, s_3.b, s_3.c
+         ->  Index Only Scan using s_3_a_b_c_e_d_idx on s_3  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 244 [Wed Mar  7 02:00:24 CET 2018] scale:10000 groups:1000 work_mem:128MB incremental:off max_workers:2 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 245 [Wed Mar  7 02:00:24 CET 2018] scale:10000 groups:1000 work_mem:128MB incremental:off max_workers:2 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         ->  Seq Scan on s_2  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 246 [Wed Mar  7 02:00:24 CET 2018] scale:10000 groups:1000 work_mem:128MB incremental:off max_workers:2 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         ->  Seq Scan on s_3  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 247 [Wed Mar  7 02:00:24 CET 2018] scale:10000 groups:1000 work_mem:256MB incremental:on max_workers:2 =====
+SELECT * FROM s_1 ORDER BY a, b
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.33..819.33 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.33 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         Presorted Key: s_1.a
+         ->  Index Only Scan using s_1_a_e_d_c_b_idx on s_1  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 248 [Wed Mar  7 02:00:24 CET 2018] scale:10000 groups:1000 work_mem:256MB incremental:on max_workers:2 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.33..819.33 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.33 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         Presorted Key: s_2.a, s_2.b
+         ->  Index Only Scan using s_2_a_b_e_d_c_idx on s_2  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 249 [Wed Mar  7 02:00:25 CET 2018] scale:10000 groups:1000 work_mem:256MB incremental:on max_workers:2 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=819.33..819.33 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.81..719.33 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         Presorted Key: s_3.a, s_3.b, s_3.c
+         ->  Index Only Scan using s_3_a_b_c_e_d_idx on s_3  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 250 [Wed Mar  7 02:00:25 CET 2018] scale:10000 groups:1000 work_mem:256MB incremental:off max_workers:2 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 251 [Wed Mar  7 02:00:25 CET 2018] scale:10000 groups:1000 work_mem:256MB incremental:off max_workers:2 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         ->  Seq Scan on s_2  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 252 [Wed Mar  7 02:00:25 CET 2018] scale:10000 groups:1000 work_mem:256MB incremental:off max_workers:2 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         ->  Seq Scan on s_3  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 253 [Wed Mar  7 02:00:26 CET 2018] scale:10000 groups:10000 work_mem:4MB incremental:on max_workers:0 =====
+SELECT * FROM s_1 ORDER BY a, b
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=810.91..810.91 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.35..710.91 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         Presorted Key: s_1.a
+         ->  Index Only Scan using s_1_a_e_d_c_b_idx on s_1  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 254 [Wed Mar  7 02:00:26 CET 2018] scale:10000 groups:10000 work_mem:4MB incremental:on max_workers:0 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=810.91..810.91 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.35..710.91 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         Presorted Key: s_2.a, s_2.b
+         ->  Index Only Scan using s_2_a_b_e_d_c_idx on s_2  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 255 [Wed Mar  7 02:00:26 CET 2018] scale:10000 groups:10000 work_mem:4MB incremental:on max_workers:0 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=810.91..810.91 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.35..710.91 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         Presorted Key: s_3.a, s_3.b, s_3.c
+         ->  Index Only Scan using s_3_a_b_c_e_d_idx on s_3  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 256 [Wed Mar  7 02:00:26 CET 2018] scale:10000 groups:10000 work_mem:4MB incremental:off max_workers:0 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 257 [Wed Mar  7 02:00:26 CET 2018] scale:10000 groups:10000 work_mem:4MB incremental:off max_workers:0 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         ->  Seq Scan on s_2  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 258 [Wed Mar  7 02:00:26 CET 2018] scale:10000 groups:10000 work_mem:4MB incremental:off max_workers:0 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         ->  Seq Scan on s_3  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 259 [Wed Mar  7 02:00:26 CET 2018] scale:10000 groups:10000 work_mem:8MB incremental:on max_workers:0 =====
+SELECT * FROM s_1 ORDER BY a, b
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=810.91..810.91 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.35..710.91 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         Presorted Key: s_1.a
+         ->  Index Only Scan using s_1_a_e_d_c_b_idx on s_1  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 260 [Wed Mar  7 02:00:26 CET 2018] scale:10000 groups:10000 work_mem:8MB incremental:on max_workers:0 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=810.91..810.91 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.35..710.91 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         Presorted Key: s_2.a, s_2.b
+         ->  Index Only Scan using s_2_a_b_e_d_c_idx on s_2  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 261 [Wed Mar  7 02:00:26 CET 2018] scale:10000 groups:10000 work_mem:8MB incremental:on max_workers:0 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=810.91..810.91 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.35..710.91 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         Presorted Key: s_3.a, s_3.b, s_3.c
+         ->  Index Only Scan using s_3_a_b_c_e_d_idx on s_3  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 262 [Wed Mar  7 02:00:26 CET 2018] scale:10000 groups:10000 work_mem:8MB incremental:off max_workers:0 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 263 [Wed Mar  7 02:00:27 CET 2018] scale:10000 groups:10000 work_mem:8MB incremental:off max_workers:0 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         ->  Seq Scan on s_2  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 264 [Wed Mar  7 02:00:27 CET 2018] scale:10000 groups:10000 work_mem:8MB incremental:off max_workers:0 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         ->  Seq Scan on s_3  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 265 [Wed Mar  7 02:00:27 CET 2018] scale:10000 groups:10000 work_mem:16MB incremental:on max_workers:0 =====
+SELECT * FROM s_1 ORDER BY a, b
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=810.91..810.91 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.35..710.91 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         Presorted Key: s_1.a
+         ->  Index Only Scan using s_1_a_e_d_c_b_idx on s_1  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 266 [Wed Mar  7 02:00:27 CET 2018] scale:10000 groups:10000 work_mem:16MB incremental:on max_workers:0 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=810.91..810.91 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.35..710.91 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         Presorted Key: s_2.a, s_2.b
+         ->  Index Only Scan using s_2_a_b_e_d_c_idx on s_2  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 267 [Wed Mar  7 02:00:27 CET 2018] scale:10000 groups:10000 work_mem:16MB incremental:on max_workers:0 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=810.91..810.91 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.35..710.91 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         Presorted Key: s_3.a, s_3.b, s_3.c
+         ->  Index Only Scan using s_3_a_b_c_e_d_idx on s_3  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 268 [Wed Mar  7 02:00:27 CET 2018] scale:10000 groups:10000 work_mem:16MB incremental:off max_workers:0 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 269 [Wed Mar  7 02:00:27 CET 2018] scale:10000 groups:10000 work_mem:16MB incremental:off max_workers:0 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         ->  Seq Scan on s_2  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 270 [Wed Mar  7 02:00:27 CET 2018] scale:10000 groups:10000 work_mem:16MB incremental:off max_workers:0 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         ->  Seq Scan on s_3  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 271 [Wed Mar  7 02:00:27 CET 2018] scale:10000 groups:10000 work_mem:32MB incremental:on max_workers:0 =====
+SELECT * FROM s_1 ORDER BY a, b
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=810.91..810.91 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.35..710.91 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         Presorted Key: s_1.a
+         ->  Index Only Scan using s_1_a_e_d_c_b_idx on s_1  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 272 [Wed Mar  7 02:00:27 CET 2018] scale:10000 groups:10000 work_mem:32MB incremental:on max_workers:0 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=810.91..810.91 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.35..710.91 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         Presorted Key: s_2.a, s_2.b
+         ->  Index Only Scan using s_2_a_b_e_d_c_idx on s_2  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 273 [Wed Mar  7 02:00:27 CET 2018] scale:10000 groups:10000 work_mem:32MB incremental:on max_workers:0 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=810.91..810.91 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.35..710.91 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         Presorted Key: s_3.a, s_3.b, s_3.c
+         ->  Index Only Scan using s_3_a_b_c_e_d_idx on s_3  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 274 [Wed Mar  7 02:00:28 CET 2018] scale:10000 groups:10000 work_mem:32MB incremental:off max_workers:0 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 275 [Wed Mar  7 02:00:28 CET 2018] scale:10000 groups:10000 work_mem:32MB incremental:off max_workers:0 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         ->  Seq Scan on s_2  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 276 [Wed Mar  7 02:00:28 CET 2018] scale:10000 groups:10000 work_mem:32MB incremental:off max_workers:0 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         ->  Seq Scan on s_3  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 277 [Wed Mar  7 02:00:28 CET 2018] scale:10000 groups:10000 work_mem:64MB incremental:on max_workers:0 =====
+SELECT * FROM s_1 ORDER BY a, b
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=810.91..810.91 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.35..710.91 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         Presorted Key: s_1.a
+         ->  Index Only Scan using s_1_a_e_d_c_b_idx on s_1  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 278 [Wed Mar  7 02:00:28 CET 2018] scale:10000 groups:10000 work_mem:64MB incremental:on max_workers:0 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=810.91..810.91 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.35..710.91 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         Presorted Key: s_2.a, s_2.b
+         ->  Index Only Scan using s_2_a_b_e_d_c_idx on s_2  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 279 [Wed Mar  7 02:00:28 CET 2018] scale:10000 groups:10000 work_mem:64MB incremental:on max_workers:0 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=810.91..810.91 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.35..710.91 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         Presorted Key: s_3.a, s_3.b, s_3.c
+         ->  Index Only Scan using s_3_a_b_c_e_d_idx on s_3  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 280 [Wed Mar  7 02:00:28 CET 2018] scale:10000 groups:10000 work_mem:64MB incremental:off max_workers:0 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 281 [Wed Mar  7 02:00:28 CET 2018] scale:10000 groups:10000 work_mem:64MB incremental:off max_workers:0 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         ->  Seq Scan on s_2  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 282 [Wed Mar  7 02:00:28 CET 2018] scale:10000 groups:10000 work_mem:64MB incremental:off max_workers:0 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         ->  Seq Scan on s_3  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 283 [Wed Mar  7 02:00:28 CET 2018] scale:10000 groups:10000 work_mem:128MB incremental:on max_workers:0 =====
+SELECT * FROM s_1 ORDER BY a, b
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=810.91..810.91 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.35..710.91 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         Presorted Key: s_1.a
+         ->  Index Only Scan using s_1_a_e_d_c_b_idx on s_1  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 284 [Wed Mar  7 02:00:28 CET 2018] scale:10000 groups:10000 work_mem:128MB incremental:on max_workers:0 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=810.91..810.91 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.35..710.91 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         Presorted Key: s_2.a, s_2.b
+         ->  Index Only Scan using s_2_a_b_e_d_c_idx on s_2  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 285 [Wed Mar  7 02:00:28 CET 2018] scale:10000 groups:10000 work_mem:128MB incremental:on max_workers:0 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=810.91..810.91 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.35..710.91 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         Presorted Key: s_3.a, s_3.b, s_3.c
+         ->  Index Only Scan using s_3_a_b_c_e_d_idx on s_3  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 286 [Wed Mar  7 02:00:29 CET 2018] scale:10000 groups:10000 work_mem:128MB incremental:off max_workers:0 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 287 [Wed Mar  7 02:00:29 CET 2018] scale:10000 groups:10000 work_mem:128MB incremental:off max_workers:0 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         ->  Seq Scan on s_2  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 288 [Wed Mar  7 02:00:29 CET 2018] scale:10000 groups:10000 work_mem:128MB incremental:off max_workers:0 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         ->  Seq Scan on s_3  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 289 [Wed Mar  7 02:00:29 CET 2018] scale:10000 groups:10000 work_mem:256MB incremental:on max_workers:0 =====
+SELECT * FROM s_1 ORDER BY a, b
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=810.91..810.91 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.35..710.91 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         Presorted Key: s_1.a
+         ->  Index Only Scan using s_1_a_e_d_c_b_idx on s_1  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 290 [Wed Mar  7 02:00:29 CET 2018] scale:10000 groups:10000 work_mem:256MB incremental:on max_workers:0 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=810.91..810.91 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.35..710.91 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         Presorted Key: s_2.a, s_2.b
+         ->  Index Only Scan using s_2_a_b_e_d_c_idx on s_2  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 291 [Wed Mar  7 02:00:29 CET 2018] scale:10000 groups:10000 work_mem:256MB incremental:on max_workers:0 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=810.91..810.91 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.35..710.91 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         Presorted Key: s_3.a, s_3.b, s_3.c
+         ->  Index Only Scan using s_3_a_b_c_e_d_idx on s_3  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 292 [Wed Mar  7 02:00:29 CET 2018] scale:10000 groups:10000 work_mem:256MB incremental:off max_workers:0 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 293 [Wed Mar  7 02:00:29 CET 2018] scale:10000 groups:10000 work_mem:256MB incremental:off max_workers:0 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         ->  Seq Scan on s_2  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 294 [Wed Mar  7 02:00:29 CET 2018] scale:10000 groups:10000 work_mem:256MB incremental:off max_workers:0 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         ->  Seq Scan on s_3  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 295 [Wed Mar  7 02:00:29 CET 2018] scale:10000 groups:10000 work_mem:4MB incremental:on max_workers:2 =====
+SELECT * FROM s_1 ORDER BY a, b
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=810.91..810.91 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.35..710.91 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         Presorted Key: s_1.a
+         ->  Index Only Scan using s_1_a_e_d_c_b_idx on s_1  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 296 [Wed Mar  7 02:00:29 CET 2018] scale:10000 groups:10000 work_mem:4MB incremental:on max_workers:2 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=810.91..810.91 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.35..710.91 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         Presorted Key: s_2.a, s_2.b
+         ->  Index Only Scan using s_2_a_b_e_d_c_idx on s_2  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 297 [Wed Mar  7 02:00:30 CET 2018] scale:10000 groups:10000 work_mem:4MB incremental:on max_workers:2 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=810.91..810.91 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.35..710.91 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         Presorted Key: s_3.a, s_3.b, s_3.c
+         ->  Index Only Scan using s_3_a_b_c_e_d_idx on s_3  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 298 [Wed Mar  7 02:00:30 CET 2018] scale:10000 groups:10000 work_mem:4MB incremental:off max_workers:2 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 299 [Wed Mar  7 02:00:30 CET 2018] scale:10000 groups:10000 work_mem:4MB incremental:off max_workers:2 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         ->  Seq Scan on s_2  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 300 [Wed Mar  7 02:00:30 CET 2018] scale:10000 groups:10000 work_mem:4MB incremental:off max_workers:2 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         ->  Seq Scan on s_3  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 301 [Wed Mar  7 02:00:30 CET 2018] scale:10000 groups:10000 work_mem:8MB incremental:on max_workers:2 =====
+SELECT * FROM s_1 ORDER BY a, b
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=810.91..810.91 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.35..710.91 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         Presorted Key: s_1.a
+         ->  Index Only Scan using s_1_a_e_d_c_b_idx on s_1  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 302 [Wed Mar  7 02:00:30 CET 2018] scale:10000 groups:10000 work_mem:8MB incremental:on max_workers:2 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=810.91..810.91 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.35..710.91 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         Presorted Key: s_2.a, s_2.b
+         ->  Index Only Scan using s_2_a_b_e_d_c_idx on s_2  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 303 [Wed Mar  7 02:00:30 CET 2018] scale:10000 groups:10000 work_mem:8MB incremental:on max_workers:2 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=810.91..810.91 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.35..710.91 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         Presorted Key: s_3.a, s_3.b, s_3.c
+         ->  Index Only Scan using s_3_a_b_c_e_d_idx on s_3  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 304 [Wed Mar  7 02:00:30 CET 2018] scale:10000 groups:10000 work_mem:8MB incremental:off max_workers:2 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 305 [Wed Mar  7 02:00:30 CET 2018] scale:10000 groups:10000 work_mem:8MB incremental:off max_workers:2 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         ->  Seq Scan on s_2  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 306 [Wed Mar  7 02:00:30 CET 2018] scale:10000 groups:10000 work_mem:8MB incremental:off max_workers:2 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         ->  Seq Scan on s_3  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 307 [Wed Mar  7 02:00:30 CET 2018] scale:10000 groups:10000 work_mem:16MB incremental:on max_workers:2 =====
+SELECT * FROM s_1 ORDER BY a, b
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=810.91..810.91 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.35..710.91 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         Presorted Key: s_1.a
+         ->  Index Only Scan using s_1_a_e_d_c_b_idx on s_1  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 308 [Wed Mar  7 02:00:31 CET 2018] scale:10000 groups:10000 work_mem:16MB incremental:on max_workers:2 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=810.91..810.91 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.35..710.91 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         Presorted Key: s_2.a, s_2.b
+         ->  Index Only Scan using s_2_a_b_e_d_c_idx on s_2  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 309 [Wed Mar  7 02:00:31 CET 2018] scale:10000 groups:10000 work_mem:16MB incremental:on max_workers:2 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=810.91..810.91 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.35..710.91 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         Presorted Key: s_3.a, s_3.b, s_3.c
+         ->  Index Only Scan using s_3_a_b_c_e_d_idx on s_3  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 310 [Wed Mar  7 02:00:31 CET 2018] scale:10000 groups:10000 work_mem:16MB incremental:off max_workers:2 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 311 [Wed Mar  7 02:00:31 CET 2018] scale:10000 groups:10000 work_mem:16MB incremental:off max_workers:2 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         ->  Seq Scan on s_2  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 312 [Wed Mar  7 02:00:31 CET 2018] scale:10000 groups:10000 work_mem:16MB incremental:off max_workers:2 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         ->  Seq Scan on s_3  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 313 [Wed Mar  7 02:00:31 CET 2018] scale:10000 groups:10000 work_mem:32MB incremental:on max_workers:2 =====
+SELECT * FROM s_1 ORDER BY a, b
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=810.91..810.91 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.35..710.91 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         Presorted Key: s_1.a
+         ->  Index Only Scan using s_1_a_e_d_c_b_idx on s_1  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 314 [Wed Mar  7 02:00:31 CET 2018] scale:10000 groups:10000 work_mem:32MB incremental:on max_workers:2 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=810.91..810.91 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.35..710.91 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         Presorted Key: s_2.a, s_2.b
+         ->  Index Only Scan using s_2_a_b_e_d_c_idx on s_2  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 315 [Wed Mar  7 02:00:31 CET 2018] scale:10000 groups:10000 work_mem:32MB incremental:on max_workers:2 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=810.91..810.91 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.35..710.91 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         Presorted Key: s_3.a, s_3.b, s_3.c
+         ->  Index Only Scan using s_3_a_b_c_e_d_idx on s_3  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 316 [Wed Mar  7 02:00:31 CET 2018] scale:10000 groups:10000 work_mem:32MB incremental:off max_workers:2 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 317 [Wed Mar  7 02:00:31 CET 2018] scale:10000 groups:10000 work_mem:32MB incremental:off max_workers:2 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         ->  Seq Scan on s_2  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 318 [Wed Mar  7 02:00:31 CET 2018] scale:10000 groups:10000 work_mem:32MB incremental:off max_workers:2 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         ->  Seq Scan on s_3  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 319 [Wed Mar  7 02:00:31 CET 2018] scale:10000 groups:10000 work_mem:64MB incremental:on max_workers:2 =====
+SELECT * FROM s_1 ORDER BY a, b
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=810.91..810.91 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.35..710.91 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         Presorted Key: s_1.a
+         ->  Index Only Scan using s_1_a_e_d_c_b_idx on s_1  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 320 [Wed Mar  7 02:00:32 CET 2018] scale:10000 groups:10000 work_mem:64MB incremental:on max_workers:2 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=810.91..810.91 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.35..710.91 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         Presorted Key: s_2.a, s_2.b
+         ->  Index Only Scan using s_2_a_b_e_d_c_idx on s_2  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 321 [Wed Mar  7 02:00:32 CET 2018] scale:10000 groups:10000 work_mem:64MB incremental:on max_workers:2 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=810.91..810.91 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.35..710.91 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         Presorted Key: s_3.a, s_3.b, s_3.c
+         ->  Index Only Scan using s_3_a_b_c_e_d_idx on s_3  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 322 [Wed Mar  7 02:00:32 CET 2018] scale:10000 groups:10000 work_mem:64MB incremental:off max_workers:2 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 323 [Wed Mar  7 02:00:32 CET 2018] scale:10000 groups:10000 work_mem:64MB incremental:off max_workers:2 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         ->  Seq Scan on s_2  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 324 [Wed Mar  7 02:00:32 CET 2018] scale:10000 groups:10000 work_mem:64MB incremental:off max_workers:2 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         ->  Seq Scan on s_3  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 325 [Wed Mar  7 02:00:32 CET 2018] scale:10000 groups:10000 work_mem:128MB incremental:on max_workers:2 =====
+SELECT * FROM s_1 ORDER BY a, b
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=810.91..810.91 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.35..710.91 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         Presorted Key: s_1.a
+         ->  Index Only Scan using s_1_a_e_d_c_b_idx on s_1  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 326 [Wed Mar  7 02:00:32 CET 2018] scale:10000 groups:10000 work_mem:128MB incremental:on max_workers:2 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=810.91..810.91 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.35..710.91 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         Presorted Key: s_2.a, s_2.b
+         ->  Index Only Scan using s_2_a_b_e_d_c_idx on s_2  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 327 [Wed Mar  7 02:00:32 CET 2018] scale:10000 groups:10000 work_mem:128MB incremental:on max_workers:2 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=810.91..810.91 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.35..710.91 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         Presorted Key: s_3.a, s_3.b, s_3.c
+         ->  Index Only Scan using s_3_a_b_c_e_d_idx on s_3  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 328 [Wed Mar  7 02:00:32 CET 2018] scale:10000 groups:10000 work_mem:128MB incremental:off max_workers:2 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 329 [Wed Mar  7 02:00:32 CET 2018] scale:10000 groups:10000 work_mem:128MB incremental:off max_workers:2 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         ->  Seq Scan on s_2  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 330 [Wed Mar  7 02:00:32 CET 2018] scale:10000 groups:10000 work_mem:128MB incremental:off max_workers:2 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         ->  Seq Scan on s_3  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 331 [Wed Mar  7 02:00:33 CET 2018] scale:10000 groups:10000 work_mem:256MB incremental:on max_workers:2 =====
+SELECT * FROM s_1 ORDER BY a, b
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=810.91..810.91 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.35..710.91 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         Presorted Key: s_1.a
+         ->  Index Only Scan using s_1_a_e_d_c_b_idx on s_1  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 332 [Wed Mar  7 02:00:33 CET 2018] scale:10000 groups:10000 work_mem:256MB incremental:on max_workers:2 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=810.91..810.91 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.35..710.91 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         Presorted Key: s_2.a, s_2.b
+         ->  Index Only Scan using s_2_a_b_e_d_c_idx on s_2  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 333 [Wed Mar  7 02:00:33 CET 2018] scale:10000 groups:10000 work_mem:256MB incremental:on max_workers:2 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Limit  (cost=810.91..810.91 rows=1 width=20)
+   ->  Incremental Sort  (cost=0.35..710.91 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         Presorted Key: s_3.a, s_3.b, s_3.c
+         ->  Index Only Scan using s_3_a_b_c_e_d_idx on s_3  (cost=0.29..358.29 rows=10000 width=20)
+(5 rows)
+
+===== 334 [Wed Mar  7 02:00:33 CET 2018] scale:10000 groups:10000 work_mem:256MB incremental:off max_workers:2 =====
+SELECT * FROM s_1 ORDER BY a, b
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_1.a, s_1.b
+         ->  Seq Scan on s_1  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 335 [Wed Mar  7 02:00:33 CET 2018] scale:10000 groups:10000 work_mem:256MB incremental:off max_workers:2 =====
+SELECT * FROM s_2 ORDER BY a, b, c
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_2.a, s_2.b, s_2.c
+         ->  Seq Scan on s_2  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
+===== 336 [Wed Mar  7 02:00:33 CET 2018] scale:10000 groups:10000 work_mem:256MB incremental:off max_workers:2 =====
+SELECT * FROM s_3 ORDER BY a, b, c, d
+                              QUERY PLAN                              
+----------------------------------------------------------------------
+ Limit  (cost=953.39..953.39 rows=1 width=20)
+   ->  Sort  (cost=828.39..853.39 rows=10000 width=20)
+         Sort Key: s_3.a, s_3.b, s_3.c, s_3.d
+         ->  Seq Scan on s_3  (cost=0.00..164.00 rows=10000 width=20)
+(4 rows)
+
